@@ -3,6 +3,7 @@ import cors from 'cors';
 import authRoutes from './modules/auth/auth.routes.js';
 import healthRoutes from './modules/health/health.routes.js';
 import { errorHandler } from './middleware/error.middleware.js';
+import { connectDB } from './config/db.js';
 
 const app = express();
 
@@ -28,6 +29,18 @@ app.use(
 );
 
 app.use(express.json());
+
+// ── DB connection middleware (serverless-safe) ───────────────────────────────
+// On Vercel there is no persistent process, so server.js is never executed.
+// This middleware ensures connectDB() is called (and cached) on every cold start.
+app.use(async (_req, _res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
 
 // ── Routes ──────────────────────────────────────────────────────────────────
 app.use('/api/health', healthRoutes);

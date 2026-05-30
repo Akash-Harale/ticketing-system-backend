@@ -1,0 +1,12 @@
+import jwt from 'jsonwebtoken';
+
+export const generateRefreshToken = (
+    userId,
+) =>
+    jwt.sign(
+        { userId },
+        process.env.JWT_REFRESH_SECRET,
+        {
+            expiresIn: '7d',
+        },
+    );

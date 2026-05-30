@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import authRoutes from './modules/auth/auth.routes.js';
+import healthRoutes from './modules/health/health.routes.js';
 import { errorHandler } from './middleware/error.middleware.js';
 
 const app = express();
@@ -29,6 +30,7 @@ app.use(
 app.use(express.json());
 
 // ── Routes ──────────────────────────────────────────────────────────────────
+app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 
 // ── 404 catch-all ───────────────────────────────────────────────────────────

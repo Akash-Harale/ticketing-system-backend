@@ -1,0 +1,279 @@
+[2026-05-30 18:14:15] INFO: Server running on port 5001
+[2026-05-30 18:16:26] INFO: Server running on port 5001
+[2026-05-30 18:16:34] INFO: Server running on port 5001
+[2026-05-30 18:18:21] INFO: Server running on port 5001
+[2026-05-30 18:18:52] INFO: Server running on port 5001
+[2026-05-30 18:20:09] INFO: Server running on port 5001
+[2026-05-30 18:21:06] INFO: Server running on port 5001
+[2026-05-30 18:21:17] INFO: Server running on port 5001
+[2026-05-30 18:25:18] INFO: Server running on port 5001
+[2026-05-30 18:27:49] INFO: Server running on port 5001
+[2026-05-30 18:31:38] INFO: Server running on port 5001
+[2026-05-30 18:33:14] INFO: Server running on port 5001
+[2026-05-30 18:37:03] INFO: Server running on port 5001
+[2026-05-30 18:40:42] INFO: Server running on port 5001
+[2026-05-30 18:44:27] INFO: Server running on port 5001
+[2026-05-30 18:44:31] INFO: Server running on port 5001
+[2026-06-01 00:25:40] INFO: Server running on port 5001
+[2026-06-01 00:26:03] INFO: Server running on port 5001
+[2026-06-01 00:26:06] INFO: Server running on port 5001
+[2026-06-01 00:26:08] INFO: Server running on port 5001
+[2026-06-01 00:26:24] INFO: Server running on port 5001
+[2026-06-01 00:49:14] INFO: Server running on port 5001
+[2026-06-01 00:54:18] INFO: Server running on port 5001
+[2026-06-01 01:10:01] INFO: Server running on port 5001
+[2026-06-01 01:10:10] INFO: Server running on port 5001
+[2026-06-01 01:10:12] INFO: Server running on port 5001
+[2026-06-01 01:11:46] INFO: Server running on port 5001
+[2026-06-01 01:14:55] INFO: Server running on port 5001
+[2026-06-01 01:15:09] INFO: Server running on port 5001
+[2026-06-01 01:15:57] INFO: Server running on port 5001
+[2026-06-01 01:16:08] INFO: Server running on port 5001
+[2026-06-01 01:19:02] INFO: Server running on port 5001
+[2026-06-01 01:19:42] INFO: Server running on port 5001
+[2026-06-01 01:19:43] INFO: Server running on port 5001
+[2026-06-01 01:21:13] INFO: Server running on port 5001
+[2026-06-01 01:21:14] INFO: Server running on port 5001
+[2026-06-01 18:26:17] INFO: Media_Corner > Static Path: F:\nutanprojects\nss-mistolls\uploads\media_corner
+[2026-06-01 18:26:17] INFO: Server running on port 5001
+[2026-06-01 18:27:19] INFO: Media_Corner > Static Path: F:\nutanprojects\nss-mistolls\uploads\media_corner
+[2026-06-01 18:27:19] INFO: Server running on port 5001
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:03:27"}
+{"level":"info","message":"🚀 Server running on port 5001","timestamp":"2026-06-01 23:03:27"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:04:13"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:04:13"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:04:33"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:04:33"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:29:02"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:29:02"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:30:38"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:30:38"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:35:19"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:35:19"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2026-06-01 23:36:38"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:36:42"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:36:42"}
+{"level":"info","message":"[a049b201-58e7-49f9-afa8-3aded001a2ce] GET /api/mediacorner/asset/?media_file=media_file-1780335909517-747436253.jpg","timestamp":"2026-06-01 23:36:49"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:41:35"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:41:35"}
+{"level":"info","message":"[2593405e-86e1-4e1a-8918-e026a1edb934] GET /api/mediacorner/asset/?media_file=media_file-1780335909517-747436253.jpg","timestamp":"2026-06-01 23:41:57"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:55:38"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:55:38"}
+{"level":"info","message":"[9ff3924f-5f3e-47ca-bb39-efc325383576] GET /api/mediacorner/asset/?media_file=media_file-1780335909517-747436253.jpg","timestamp":"2026-06-01 23:55:40"}
+{"level":"info","message":"[27211613-3faf-4f67-ae7d-7c6cec77fe7a] GET /api/mediacorner/6a1a9ce1be603417df514cd2","timestamp":"2026-06-01 23:58:08"}
+{"level":"error","message":"[27211613-3faf-4f67-ae7d-7c6cec77fe7a] Upload error: 404","timestamp":"2026-06-01 23:58:08"}
+{"level":"info","message":"[fda37a47-6578-4fe0-bdb4-80a84edb26c3] GET /api/mediacorner?media_type=image","timestamp":"2026-06-01 23:58:43"}
+{"level":"info","message":"[06d5319c-e8c5-46be-a96b-66bc8d21a3a9] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-01 23:59:01"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-01 23:59:45"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-01 23:59:46"}
+{"level":"info","message":"[baa2265a-f779-445f-8426-0712c8ac4df6] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-01 23:59:51"}
+{"level":"error","message":"[baa2265a-f779-445f-8426-0712c8ac4df6] Upload error: 404","timestamp":"2026-06-01 23:59:51"}
+{"level":"info","message":"[cc31ff75-88b1-43a1-a05c-14d889521983] POST /api/mediacorner","timestamp":"2026-06-02 00:00:28"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-02 00:01:09"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:01:09"}
+{"level":"info","message":"[200f5c3d-6fa6-487f-8bf9-768a9758fefa] POST /api/mediacorner","timestamp":"2026-06-02 00:01:11"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-02 00:02:36"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:02:36"}
+{"level":"info","message":"[b9bfbd79-5ae1-42eb-954e-0ac2afd344b4] POST /api/mediacorner","timestamp":"2026-06-02 00:02:38"}
+{"level":"info","message":"[b9bfbd79-5ae1-42eb-954e-0ac2afd344b4] Media Corner created: 6a1dd0468bbc9324357059c4","timestamp":"2026-06-02 00:02:38"}
+{"level":"info","message":"[476d95c9-e15c-4f29-afb2-6ac61ce14f71] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-02 00:02:45"}
+{"level":"info","message":"[41fb7a44-8c82-429b-87d5-340d55e422b4] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-02 00:04:54"}
+{"level":"info","message":"[85a61de7-a8a2-43de-91f9-0c6d152695ec] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-02 00:05:25"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\nss-mistolls\\uploads\\media_corner","timestamp":"2026-06-02 00:11:52"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:11:52"}
+{"level":"info","message":"[cb7cf03b-2afc-4b0e-8343-b87471657926] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-02 00:12:05"}
+{"level":"info","message":"[e9d5d8ab-c00d-4927-bb43-04a468d6b9bf] GET /api/mediacorner/6a1a9ce1be603417df514cd2","timestamp":"2026-06-02 00:12:20"}
+{"level":"error","message":"[e9d5d8ab-c00d-4927-bb43-04a468d6b9bf] Upload error: 404","timestamp":"2026-06-02 00:12:20"}
+{"level":"info","message":"[d04dd28c-d466-43f9-9337-ca15834105f1] GET /api/mediacorner/6a1dd0468bbc9324357059c4","timestamp":"2026-06-02 00:12:50"}
+{"level":"info","message":"[4ddb93d4-a33c-4d9d-b667-e37ea2586d6d] POST /api/mediacorner","timestamp":"2026-06-02 00:14:18"}
+{"level":"info","message":"[4ddb93d4-a33c-4d9d-b667-e37ea2586d6d] Media Corner created: 6a1dd30276bed4539f651405","timestamp":"2026-06-02 00:14:18"}
+{"level":"info","message":"[01d1d253-fe97-4404-866d-0f30b28d172e] GET /api/mediacorner/asset/?media_file=media_file-1780339458744-70129587.jpg","timestamp":"2026-06-02 00:15:09"}
+{"level":"info","message":"[c5ce6b18-4cc4-4aa6-81e1-d7e19cf249fe] PUT /api/mediacorner/6a1a9ce1be603417df514cd2","timestamp":"2026-06-02 00:15:22"}
+{"level":"error","message":"[c5ce6b18-4cc4-4aa6-81e1-d7e19cf249fe] Upload error: 404","timestamp":"2026-06-02 00:15:22"}
+{"level":"info","message":"[1a4ed061-e2da-4117-b837-57d7dafaff36] PUT /api/mediacorner/6a1a9ce1be603417df514cd2","timestamp":"2026-06-02 00:16:07"}
+{"level":"error","message":"[1a4ed061-e2da-4117-b837-57d7dafaff36] Upload error: 404","timestamp":"2026-06-02 00:16:07"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 00:17:48"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:17:48"}
+{"level":"info","message":"[3673926a-e82e-4fc3-a2c1-50b08e4c04bb] PUT /api/mediacorner/6a1a9ce1be603417df514cd2","timestamp":"2026-06-02 00:18:40"}
+{"level":"error","message":"[3673926a-e82e-4fc3-a2c1-50b08e4c04bb] Upload error: 404","timestamp":"2026-06-02 00:18:40"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 00:30:11"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:30:11"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 00:31:44"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:31:44"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 00:37:50"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:37:50"}
+{"level":"info","message":"[31ef3568-e784-4e6b-abd5-2187f3893433] PUT /api/mediacorner/6a1a9ce1be603417df514cd2","timestamp":"2026-06-02 00:37:56"}
+{"level":"error","message":"[31ef3568-e784-4e6b-abd5-2187f3893433] Upload error: 404","timestamp":"2026-06-02 00:37:56"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 00:40:43"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:40:43"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 00:45:00"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:45:00"}
+{"level":"info","message":"[4c582c9f-a285-4708-92f4-80a5be9ffe82] PUT /api/mediacorner/6a1a9ce1be603417df514cd2","timestamp":"2026-06-02 00:45:07"}
+{"level":"info","message":"[c9c87fa8-5dc4-40dd-86ee-f472ff4151a7] POST /api/mediacorner","timestamp":"2026-06-02 00:45:36"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 00:53:04"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 00:53:04"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 01:00:53"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 01:00:53"}
+{"level":"info","message":"[a21311ff-66f3-4b77-bd81-2fb893c7d0b8] POST /api/mediacorner","timestamp":"2026-06-02 01:01:00"}
+{"level":"info","message":"[a21311ff-66f3-4b77-bd81-2fb893c7d0b8] Media Corner created: 6a1dddf44e0321be48ac342a","timestamp":"2026-06-02 01:01:00"}
+{"level":"info","message":"[0e75ef86-fe7d-4984-8686-292b87bdea03] PUT /api/mediacorner/6a1a9ce1be603417df514cd2","timestamp":"2026-06-02 01:01:38"}
+{"level":"error","message":"[0e75ef86-fe7d-4984-8686-292b87bdea03] Upload error: 404","timestamp":"2026-06-02 01:01:38"}
+{"level":"info","message":"[416df45c-a427-41c3-b5f7-c60ec4d90afe] PUT /api/mediacorner/6a1dddf44e0321be48ac342a","timestamp":"2026-06-02 01:01:53"}
+{"level":"info","message":"[416df45c-a427-41c3-b5f7-c60ec4d90afe] Deleted file: ipconfig-output-1780342260791-780655706.jpg","timestamp":"2026-06-02 01:01:53"}
+{"level":"info","message":"[3af648c6-49c9-4a2f-88a6-ad9b33d2b828] DELETE /api/mediacorner/6a1dddf44e0321be48ac342a","timestamp":"2026-06-02 01:02:44"}
+{"level":"info","message":"[3af648c6-49c9-4a2f-88a6-ad9b33d2b828] Deleted file: cin-certificate-1780342313814-138309805.jpg","timestamp":"2026-06-02 01:02:44"}
+{"level":"info","message":"[811c8c90-a4a4-4323-9f83-855b8886d4a8] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-02 01:03:27"}
+{"level":"info","message":"[9119b1e8-a5c0-4348-b3f6-ff603d0e34c5] GET /api/mediacorner/asset/?media_file=media_file-1780339458744-70129587.jpg","timestamp":"2026-06-02 01:03:39"}
+{"level":"info","message":"[356b1e4a-6e3d-4eb5-96c2-ef4375c8412a] GET /api/mediacorner/asset/?media_file=media_file-1780336095862-779973371.jpg","timestamp":"2026-06-02 01:05:44"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 01:12:31"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 01:12:31"}
+{"level":"info","message":"[5a9ef7ce-3bc0-4cc7-8aa8-789856a5b026] GET /api/mediacorner/asset/?media_file=media_file-1780336095862-779973371.jpg","timestamp":"2026-06-02 01:12:43"}
+{"level":"info","message":"[ce8fee37-b012-467c-a34b-58dc92395aea] GET /api/mediacorner/asset/?media_file=media_file-1780339720932-610799671.jpg","timestamp":"2026-06-02 01:13:29"}
+{"level":"info","message":"[6c364067-bc78-4914-a97c-fb4157efb7e2] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-02 01:15:17"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2026-06-02 09:35:56"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:06:36"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:06:36"}
+{"level":"info","message":"[2cb99da4-7d64-4ff6-81a4-fa857d2e2566] POST /api/mediacorner","timestamp":"2026-06-02 12:07:47"}
+{"level":"error","message":"[2cb99da4-7d64-4ff6-81a4-fa857d2e2566] Upload error: MediaCorner validation failed: media_file: Media file is required","timestamp":"2026-06-02 12:07:47"}
+{"level":"info","message":"[503add89-5c69-4006-b818-7a6a4d41b04a] POST /api/mediacorner","timestamp":"2026-06-02 12:08:11"}
+{"level":"info","message":"[503add89-5c69-4006-b818-7a6a4d41b04a] Media Corner created: 6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:08:12"}
+{"level":"info","message":"[0f633a9c-36e0-4d37-bdc4-7513d04ea3c5] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:08:34"}
+{"level":"info","message":"[0113c95d-7f9c-4e5d-8e59-dfa9fe7ffb40] GET /api/mediacorner/?media_type=image","timestamp":"2026-06-02 12:08:42"}
+{"level":"info","message":"[1e594c4e-db0c-4136-ae91-6f74a6ad9bea] GET /media/media_file-1780338758949-664572207.jpg","timestamp":"2026-06-02 12:09:23"}
+{"level":"info","message":"[a38c46ac-0766-427c-93bc-a27aedba7d48] PUT /api/mediacorner","timestamp":"2026-06-02 12:10:07"}
+{"level":"info","message":"[59cef3fd-62bb-404a-8f08-2a959a49c9f8] PUT /api/mediacorner","timestamp":"2026-06-02 12:10:29"}
+{"level":"info","message":"[cf8acbef-6946-4937-bcd9-60609a1e2bb2] PUT /api/mediacorner","timestamp":"2026-06-02 12:11:04"}
+{"level":"info","message":"[5ab88043-1f71-4d5c-93e6-229fa357e915] PUT /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:11:52"}
+{"level":"info","message":"[7b681c12-1ea6-48dd-9196-29928be26f90] PUT /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:12:07"}
+{"level":"info","message":"[7b681c12-1ea6-48dd-9196-29928be26f90] Deleted file: ownerapp-mockup-1780382292010-79461968.jpg","timestamp":"2026-06-02 12:12:07"}
+{"level":"info","message":"[34d033da-44cb-4798-8475-e51578467eea] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:12:19"}
+{"level":"info","message":"[4fcf9e04-2b4e-43c1-b889-90fbb74e391d] DELETE /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:12:31"}
+{"level":"info","message":"[4fcf9e04-2b4e-43c1-b889-90fbb74e391d] Deleted file: facerderrorsnapshot-1780382527532-191222215.jpeg","timestamp":"2026-06-02 12:12:31"}
+{"level":"info","message":"[faf0cc57-f037-4c2e-b06e-e68833bb1b42] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:12:36"}
+{"level":"error","message":"[faf0cc57-f037-4c2e-b06e-e68833bb1b42] Upload error: 404","timestamp":"2026-06-02 12:12:36"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:16:18"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:16:18"}
+{"level":"info","message":"[72c5b4d9-f655-4165-856a-765360665038] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:16:23"}
+{"level":"error","message":"[72c5b4d9-f655-4165-856a-765360665038] Upload error: 404","timestamp":"2026-06-02 12:16:24"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:17:57"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:17:57"}
+{"level":"info","message":"[fb0bdf30-46db-4071-b250-fa6fdb8c2108] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:18:02"}
+{"level":"error","message":"[fb0bdf30-46db-4071-b250-fa6fdb8c2108] Upload error: 404","timestamp":"2026-06-02 12:18:02"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:21:16"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:21:16"}
+{"level":"info","message":"[e46e1585-22de-404d-9e8a-925eeccb0310] GET /api/mediacorner/asset/?media_file=media_file-1780128993986-10450465.jpg","timestamp":"2026-06-02 12:23:38"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:25:44"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:25:44"}
+{"level":"info","message":"[68218d09-d391-49f8-82aa-cdca3ed2a715] GET /api/mediacorner/asset/?media_file=media_file-1780128993986-10450465.jpg","timestamp":"2026-06-02 12:25:59"}
+{"level":"info","message":"[4bd2889e-22b5-4aae-87ab-0d60351231bf] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:26:04"}
+{"level":"error","message":"[4bd2889e-22b5-4aae-87ab-0d60351231bf] Upload error: Media Corner not found","timestamp":"2026-06-02 12:26:04"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:31:00"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:31:00"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:35:54"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:35:54"}
+{"level":"info","message":"[762a4742-7377-4b8a-a463-f2fb1d130b7a] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:35:56"}
+{"level":"error","message":"[762a4742-7377-4b8a-a463-f2fb1d130b7a] Upload error: Media Corner not found","timestamp":"2026-06-02 12:35:56"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:40:19"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:40:19"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:48:18"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:48:18"}
+{"level":"info","message":"[0e1da3cf-5303-4b91-aebe-e264ee67f625] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 12:48:23"}
+{"level":"info","message":"[c4761533-dae9-4dd5-8f02-77a70ddf5bc3] POST /api/mediacorner","timestamp":"2026-06-02 12:50:41"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:51:51"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:51:51"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:52:20"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:52:20"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:53:06"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:53:06"}
+{"level":"info","message":"[9ddc5d35-769d-48e1-be55-a3434f1eae56] POST /api/mediacorner","timestamp":"2026-06-02 12:54:04"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 12:59:33"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 12:59:33"}
+{"level":"info","message":"[6a607038-8c8c-40b6-9784-98cd9a56b2a3] POST /api/mediacorner","timestamp":"2026-06-02 13:00:22"}
+{"level":"error","message":"[6a607038-8c8c-40b6-9784-98cd9a56b2a3] Error caught Only image files (JPEG/JPG/PNG/GIF) or MP4 are allowed!","path":"/api/mediacorner","stack":"Error: Only image files (JPEG/JPG/PNG/GIF) or MP4 are allowed!\n    at fileFilter (file:///F:/nutanprojects/ticketing-system-backend/src/config/multerv2.js:15:8)\n    at wrappedFileFilter (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\multer\\index.js:45:7)\n    at Multipart.<anonymous> (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\multer\\lib\\make-middleware.js:183:7)\n    at Multipart.emit (node:events:518:28)\n    at HeaderParser.cb (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\streamsearch\\lib\\sbmh.js:219:14)\n    at SBMH.push (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)","statusCode":500,"timestamp":"2026-06-02 13:00:22","type":"Error"}
+{"level":"info","message":"[b7e79bfe-9f82-4b50-b26d-efe79d8b1d0a] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 13:00:42"}
+{"level":"error","message":"[b7e79bfe-9f82-4b50-b26d-efe79d8b1d0a] Error caught Media Corner not found","path":"/api/mediacorner/6a1e7a5476309851678fcd50","stack":"Error: Media Corner not found\n    at getMediaCornerById (file:///F:/nutanprojects/ticketing-system-backend/src/controllers/mediaCornerController.js:302:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","statusCode":404,"timestamp":"2026-06-02 13:00:42","type":"AppError"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:03:35"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:03:35"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:03:51"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:03:51"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:04:17"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:04:18"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:06:59"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:06:59"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:08:59"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:08:59"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:09:14"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:09:14"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:12:08"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:12:08"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:13:15"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:13:16"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:23:29"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:23:29"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:23:40"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:23:40"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:23:59"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:23:59"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 13:24:23"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 13:24:23"}
+{"level":"info","message":"[28f0d09a-f917-4ca7-9db2-48bfc38b7aae] GET /api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 13:24:30"}
+{"details":null,"level":"error","message":"[28f0d09a-f917-4ca7-9db2-48bfc38b7aae] AppError: Media Corner not found","path":"/api/mediacorner/6a1e7a5476309851678fcd50","timestamp":"2026-06-02 13:24:30"}
+{"level":"info","message":"[62c9cb1e-9bb8-41fa-b2d2-ee1e5c03a247] POST /api/mediacorner","timestamp":"2026-06-02 13:25:16"}
+{"level":"error","message":"[62c9cb1e-9bb8-41fa-b2d2-ee1e5c03a247] Unexpected error: Only image files (JPEG/JPG/PNG/GIF) or MP4 are allowed!","path":"/api/mediacorner","stack":"Error: Only image files (JPEG/JPG/PNG/GIF) or MP4 are allowed!\n    at fileFilter (file:///F:/nutanprojects/ticketing-system-backend/src/config/multerv2.js:15:8)\n    at wrappedFileFilter (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\multer\\index.js:45:7)\n    at Multipart.<anonymous> (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\multer\\lib\\make-middleware.js:183:7)\n    at Multipart.emit (node:events:518:28)\n    at HeaderParser.cb (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\streamsearch\\lib\\sbmh.js:248:10)\n    at SBMH.push (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)","timestamp":"2026-06-02 13:25:16"}
+{"level":"info","message":"[656d62a7-6eb0-4edd-a18f-4f554289ed68] POST /api/mediacorner","timestamp":"2026-06-02 15:50:27"}
+{"level":"error","message":"[656d62a7-6eb0-4edd-a18f-4f554289ed68] Unexpected error: Only image files (JPEG/JPG/PNG/GIF) or MP4 are allowed!","path":"/api/mediacorner","stack":"Error: Only image files (JPEG/JPG/PNG/GIF) or MP4 are allowed!\n    at fileFilter (file:///F:/nutanprojects/ticketing-system-backend/src/config/multerv2.js:15:8)\n    at wrappedFileFilter (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\multer\\index.js:45:7)\n    at Multipart.<anonymous> (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\multer\\lib\\make-middleware.js:183:7)\n    at Multipart.emit (node:events:518:28)\n    at HeaderParser.cb (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:358:14)\n    at HeaderParser.push (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:162:20)\n    at SBMH.ssCb [as _cb] (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:394:37)\n    at feed (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\streamsearch\\lib\\sbmh.js:248:10)\n    at SBMH.push (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\streamsearch\\lib\\sbmh.js:104:16)\n    at Multipart._write (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\busboy\\lib\\types\\multipart.js:567:19)","timestamp":"2026-06-02 15:50:27"}
+{"level":"info","message":"[229b3816-0bfd-48bf-8d0b-2c967e229a3a] POST /api/mediacorner","timestamp":"2026-06-02 15:51:08"}
+{"level":"info","message":"[229b3816-0bfd-48bf-8d0b-2c967e229a3a] Media Corner created: 6a1eae94e92c19d0fe2ca846","timestamp":"2026-06-02 15:51:08"}
+{"level":"info","message":"[1d42fb9a-0505-4d46-8f30-ece4bb0c0e1a] GET /api/mediacorner/6a1eae94e92c19d0fe2ca846","timestamp":"2026-06-02 15:52:42"}
+{"level":"info","message":"[bb7efa08-5db3-4d79-99ba-2155b9fe96e7] GET /media/ownerapp-mockup-1780395668458-890171562.jpg","timestamp":"2026-06-02 15:53:24"}
+{"level":"info","message":"[60f12499-f731-4f28-b6cb-fe2d55001c5e] GET /api/mediacorner/asset/?media_file=ownerapp-mockup-1780395668458-890171562.jpg","timestamp":"2026-06-02 15:54:07"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-02 23:59:35"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-02 23:59:35"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:11:54"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:11:54"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:12:10"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:12:11"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:12:45"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:12:45"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:13:19"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:13:19"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:13:44"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:13:44"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:15:25"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:15:25"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:30:17"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:30:17"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:30:22"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:30:22"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:30:49"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:30:49"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:31:31"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:31:31"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:32:01"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:32:01"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:32:38"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:32:38"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:35:24"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:35:24"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:35:32"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:35:32"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:38:47"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:38:47"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:38:50"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:38:50"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:39:14"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:39:14"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:39:16"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:39:16"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:40:14"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:40:14"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:42:17"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:42:17"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:46:36"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:46:36"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:46:46"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:46:46"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 00:48:10"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:48:10"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 01:32:20"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 01:32:21"}

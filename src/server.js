@@ -1,4 +1,6 @@
-import dotenv from 'dotenv';
+// src/server.js
+
+import dotenv from "dotenv";
 dotenv.config();
 
 
@@ -25,95 +27,43 @@ console.log('Media_Corner > Static Path from .env param: ', mediaCornerPath);
 // Routes
 const toolsMediaCornerRoutes = require('./routes/toolsMediaCornerRoutes');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
+let server;
 
-const app = express();
-
-
-// Core Middleware
-app.use(express.json()); // For JSON payloads
-app.use(express.urlencoded({ extended: true })); // For form submissions
-
-app.use(requestId); // Inject requestId early
-
-// Log Incoming Requests (optional)
-app.use((req, res, next) => {
-  logger.info(`[${req.requestId}] Incoming ${req.method} ${req.originalUrl}`);
-  next();
-});
-
-app.use(mediaCornerPath, (req, res, next) => {
-  console.log(`[${new Date().toISOString()}] Static hit: ${req.originalUrl} from ${req.ip}`);
-  next();
-});
-
-// Serve static files from /uploads/media_corner
-app.use('/media', express.static(mediaCornerPath));
-
-
-//  Mount API Routes
-app.use('/api/mediacorner', toolsMediaCornerRoutes);
-
-// Health Check
-app.get('/ping', (req, res) => {
-  res.status(200).json({ message: 'Server is alive' });
-});
-
-// 404 Handler (optional)
-app.use((req, res, next) => {
-  res.status(404).json({ error: 'Alert! Route not found' });
-});
-
-
-// Multer & File Upload Error Handling with requestId
-app.use((err, req, res, next) => {
-  const requestId = req.requestId || 'N/A';
-
-  if (err instanceof multer.MulterError) {
-    // Multer-specific errors (e.g., file too large)
-    logger.warn(`[${requestId}] Multer error: ${err.message}`);
-    return res.status(400).json({
-      error: 'Multer error',
-      details: err.message,
-      requestId
+// ── Start Server ─────────────────────────────────────────────
+(async () => {
+  try {
+    await connectDB();
+    server = app.listen(PORT, () => {
+      logger.info(`Server running on port ${PORT}`);
     });
+  } catch (err) {
+    logger.error(`Startup aborted due to DB error: ${err.message}`, { stack: err.stack });
+    process.exit(1);
   }
+})();
 
-  if (err.message === 'Only image files (JPEG/JPG/PNG/GIF) are allowed!') {
-    // Custom file type error from your fileFilter
-    logger.warn(`[${requestId}] Invalid file type: ${err.message}`);
-    return res.status(400).json({
-      error: 'Invalid file type',
-      details: err.message,
-      requestId
-    });
+// ── Graceful Shutdown ────────────────────────────────────────
+const shutdown = async (signal) => {
+  logger.info(`Received ${signal}. Shutting down gracefully...`);
+
+  try {
+    if (server) {
+      await new Promise((resolve, reject) => {
+        server.close((err) => (err ? reject(err) : resolve()));
+      });
+      logger.info("HTTP server closed");
+    }
+
+    await disconnectDB();
+    logger.info("Database connection closed");
+
+    process.exit(0);
+  } catch (err) {
+    logger.error(`Error during shutdown: ${err.message}`, { stack: err.stack });
+    process.exit(1);
   }
+};
 
-  if (err) {
-    // Generic errors during upload
-    logger.error(`[${requestId}] Upload error: ${err.message}`);
-    return res.status(500).json({
-      error: 'Server error',
-      details: err.message,
-      requestId
-    });
-  }
-
-  next(); // Pass to next middleware if no error
-});
-
-//  Global Error Handler
-app.use(errorHandler); // Handles all uncaught errors centrally
-
-
-// Connect DB and start server
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
-  })
-  .catch(err => {
-    logger.error('Server startup aborted due to DB error');
-    process.exit(1); // fail fast
-  });
-
-  
+process.on("SIGINT", () => shutdown("SIGINT"));
+process.on("SIGTERM", () => shutdown("SIGTERM"));

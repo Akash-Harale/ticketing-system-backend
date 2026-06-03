@@ -1,0 +1,40 @@
+// Sample json data to be completed
+// continue for all 28 states + 8 union territories
+{
+  "states": [
+    {
+      "state_id": "UP",
+      "state_name": "Uttar Pradesh",
+      "districts": [
+        { "district_id": "UP01", "district_name": "Agra" },
+        { "district_id": "UP02", "district_name": "Aligarh" },
+        { "district_id": "UP03", "district_name": "Allahabad (Prayagraj)" },
+        { "district_id": "UP04", "district_name": "Ambedkar Nagar" },
+        { "district_id": "UP05", "district_name": "Amethi" }
+      ]
+    },
+    {
+      "state_id": "MH",
+      "state_name": "Maharashtra",
+      "districts": [
+        { "district_id": "MH01", "district_name": "Ahmednagar" },
+        { "district_id": "MH02", "district_name": "Akola" },
+        { "district_id": "MH03", "district_name": "Amravati" },
+        { "district_id": "MH04", "district_name": "Aurangabad" },
+        { "district_id": "MH05", "district_name": "Beed" }
+      ]
+    },
+    {
+      "state_id": "DL",
+      "state_name": "Delhi",
+      "districts": [
+        { "district_id": "DL01", "district_name": "Central Delhi" },
+        { "district_id": "DL02", "district_name": "East Delhi" },
+        { "district_id": "DL03", "district_name": "New Delhi" },
+        { "district_id": "DL04", "district_name": "North Delhi" },
+        { "district_id": "DL05", "district_name": "South Delhi" }
+      ]
+    }
+  ]
+}
+

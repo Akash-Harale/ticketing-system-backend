@@ -1,12 +1,15 @@
 // seedIndiaDistricts.js
 
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
+
 import fs from "fs";
 import path from "path";
-import { StateMaster } from "../src/models/stateMaster.js";
-import { DistrictMaster } from "../src/models/districtMaster.js";
+import { StateMaster } from "../models/stateMaster.js";
+import { DistrictMaster } from "../models/districtMaster.js";
 
-const filePath = path.resolve("data/indiaStatesDistricts.json");
+const filePath = path.resolve("./src/scripts/districts.json");
 
 (async () => {
   try {

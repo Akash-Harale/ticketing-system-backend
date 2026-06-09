@@ -1,6 +1,8 @@
 // scripts/seedStates.js
 import mongoose from "mongoose";
-import { StateMaster } from "../src/models/stateMaster.js";
+import dotenv from "dotenv";
+dotenv.config();
+import { StateMaster } from "../models/stateMaster.js";
 
 const states = [
   { state_id: "AP", state_name: "Andhra Pradesh" },

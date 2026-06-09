@@ -30,7 +30,7 @@ import { Member } from "../models/memberModel.js";
     const getRoleId = (name) => roles.find(r => r.role_name === name)._id;
 
     // Log all roles with IDs
-    console.log("📌 Seeded Roles:");
+    console.log("Seeded Roles:");
     roles.forEach(r => console.log(`   ${r.role_name} → ${r._id}`));
 
     // Seed Organizations

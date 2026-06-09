@@ -9,12 +9,20 @@ import { sendResponse } from "../utils/sendResponse.js";
 export const createOrganization = async (req, res, next) => {
   try {
     const org = await Organization.create(req.body);
-    return sendResponse(res, 201, true, "Organization created successfully", org, null, req);
+
+    return sendResponse(
+      res,
+      201,
+      true,
+      "Organization created successfully",
+      org,          // full document
+      null,      // extra details object
+      req
+    );
   } catch (err) {
     next(err);
   }
 };
-
 // Get All Organizations
 export const getOrganizations = async (req, res, next) => {
   try {

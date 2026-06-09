@@ -140,6 +140,7 @@ import { rolloutRoutes } from "./routes/rolloutRoutes.js";
 import { rolloutTaskRoutes } from "./routes/rolloutTaskRoutes.js";
 import { MasterTemplate } from "./models/masterTemplate.js";
 import { stateDistrictRoutes } from "./routes/stateDistrictRoutes.js";
+import { roleRoutes } from "./routes/roleRoutes.js";
 
 const app = express();
 
@@ -176,6 +177,7 @@ app.use("/api/mastertemplates", masterTemplateRoutes);
 app.use("/api/rollouts", rolloutRoutes);
 app.use("/api/rollouttasks", rolloutTaskRoutes);
 app.use("/api/location", stateDistrictRoutes);
+app.use("/api/roles", roleRoutes);
 
 // Health Check
 app.get("/ping", (req, res) => {

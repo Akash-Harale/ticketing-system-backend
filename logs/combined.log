@@ -277,3 +277,126 @@
 {"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 00:48:10"}
 {"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-03 01:32:20"}
 {"level":"info","message":"Server running on port 5001","timestamp":"2026-06-03 01:32:21"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:06:23"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:06:23"}
+{"level":"info","message":"[2e11963c-70ba-46e3-9283-5b68a5fc41c0] GET /api/roles","timestamp":"2026-06-05 11:07:12"}
+{"level":"info","message":"[3a4c0f0c-6e92-44ea-b7f5-0393c29fa8b9] POST /api/roles","timestamp":"2026-06-05 11:08:13"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:13:36"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:13:36"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:13:38"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:13:38"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:14:02"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:14:02"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:14:24"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:14:24"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:16:12"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:16:12"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:16:54"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:16:54"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:16:56"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:16:56"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2026-06-05 11:16:59"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 11:21:32"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 11:21:33"}
+{"level":"info","message":"[bf105ff7-23b7-4dca-8089-860b9e27cc93] GET /api/roles","timestamp":"2026-06-05 11:21:34"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 12:42:58"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 12:42:58"}
+{"level":"info","message":"[63cfb043-ac45-4373-b4c9-6abdf51cec30] GET /api/organizations","timestamp":"2026-06-05 12:44:30"}
+{"level":"info","message":"[36db5411-ea94-42a7-8810-d29ef8ac2798] POST /api/organizations","timestamp":"2026-06-05 12:44:47"}
+{"level":"info","message":"[4aabb7e6-96b7-4276-b477-63942998dc67] GET /api/organizations","timestamp":"2026-06-05 12:44:58"}
+{"level":"info","message":"[fd9401c9-6a74-49d8-b815-1ec58116531a] GET /api/organizations/6a227767c1fd7043da6f4aff","timestamp":"2026-06-05 12:45:38"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 13:14:39"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 13:14:39"}
+{"level":"info","message":"Received SIGINT. Shutting down gracefully...","timestamp":"2026-06-05 13:14:48"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:47:10"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:47:10"}
+{"level":"info","message":"[897f49e1-23b2-4979-bab3-26828cf7a4ec] GET /api/roles","timestamp":"2026-06-05 15:47:35"}
+{"level":"info","message":"[de1235e6-6cc7-40c4-8c9d-82bdf204eb48] GET /api/roles/6a2263a13467078a804a2c63","timestamp":"2026-06-05 15:48:03"}
+{"level":"info","message":"[cd516e4f-071b-453d-9b8d-49ceabed5f66] GET /api/roles?role_name=PC","timestamp":"2026-06-05 15:49:19"}
+{"level":"info","message":"[3edf2558-3473-4d11-b2c2-0bfe3489351a] GET /api/roles?role_name=SUPERADMIN","timestamp":"2026-06-05 15:49:36"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:50:02"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:50:02"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:51:29"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:51:29"}
+{"level":"info","message":"[fed1ac16-fe89-4d3a-8b8a-81c91c25788f] GET /api/roles?role_name=SUPERADMIN","timestamp":"2026-06-05 15:51:38"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:52:14"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:52:14"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:52:29"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:52:29"}
+{"level":"info","message":"[14d7b33a-7a06-452a-a705-b5ec1e8898a8] GET /api/roles?role_name=SUPERADMIN","timestamp":"2026-06-05 15:52:36"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:53:34"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:53:34"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:54:21"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:54:21"}
+{"level":"info","message":"[748e2b0f-b0f3-4ba7-a652-951c707831cd] GET /api/roles?role_name=SUPERADMIN","timestamp":"2026-06-05 15:54:24"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:56:57"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:56:57"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 15:57:43"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 15:57:43"}
+{"level":"info","message":"[f3a038bd-3f37-494b-bfcb-e0d2d7d0daff] GET /api/roles/search?role_name=SUPERADMIN","timestamp":"2026-06-05 15:57:58"}
+{"details":[{"context":{"key":"id","label":"id","value":"search"},"message":"\"id\" must only contain hexadecimal characters","path":["id"],"type":"string.hex"}],"level":"warn","message":"[f3a038bd-3f37-494b-bfcb-e0d2d7d0daff] Validation/AppError: Invalid request parameters","path":"/api/roles/search?role_name=SUPERADMIN","timestamp":"2026-06-05 15:57:58"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:02:07"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:02:07"}
+{"level":"info","message":"[98c02615-458a-4772-871f-88af5ca0bbda] GET /api/roles/search?role_name=SUPERADMIN","timestamp":"2026-06-05 16:02:12"}
+{"details":[{"context":{"key":"id","label":"id","value":"search"},"message":"\"id\" must only contain hexadecimal characters","path":["id"],"type":"string.hex"}],"level":"warn","message":"[98c02615-458a-4772-871f-88af5ca0bbda] Validation/AppError: Invalid request parameters","path":"/api/roles/search?role_name=SUPERADMIN","timestamp":"2026-06-05 16:02:12"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:05:54"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:05:54"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:06:01"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:06:01"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:06:23"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:06:23"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:06:28"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:06:28"}
+{"level":"info","message":"[be663da1-10b3-4af2-b0e5-0fc237304d24] GET /api/roles/search?role_name=SUPERADMIN","timestamp":"2026-06-05 16:06:31"}
+{"details":null,"level":"error","message":"[be663da1-10b3-4af2-b0e5-0fc237304d24] AppError: Role not found with role_name: SUPERADMIN","path":"/api/roles/search?role_name=SUPERADMIN","timestamp":"2026-06-05 16:06:31"}
+{"level":"info","message":"[87b9dc6b-d81b-4617-8e43-64da226e8a70] GET /api/roles/search?role_name=SuperAdmin","timestamp":"2026-06-05 16:06:47"}
+{"level":"info","message":"[8e12278b-f14e-47c1-afc9-69bf1e8da487] GET /api/roles","timestamp":"2026-06-05 16:07:14"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:10:47"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:10:47"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:12:07"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:12:07"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:12:23"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:12:23"}
+{"level":"info","message":"[b003f181-7d6e-4e77-a5cd-f817a2f148c7] POST /api/members","timestamp":"2026-06-05 16:12:26"}
+{"details":{"organization":"\"organization\" length must be 24 characters long","role_id":"\"role_id\" length must be 24 characters long"},"level":"warn","message":"[b003f181-7d6e-4e77-a5cd-f817a2f148c7] Validation/AppError: Validation failed","path":"/api/members","timestamp":"2026-06-05 16:12:26"}
+{"level":"info","message":"[17d43847-7425-4e28-9815-dd11b88c0366] GET /api/organizations","timestamp":"2026-06-05 16:13:24"}
+{"level":"info","message":"[cbc89736-6ced-40d8-9046-9739840b0129] POST /api/members","timestamp":"2026-06-05 16:14:08"}
+{"level":"error","message":"[cbc89736-6ced-40d8-9046-9739840b0129] Unexpected error: password is not defined","path":"/api/members","stack":"ReferenceError: password is not defined\n    at createMember (file:///F:/nutanprojects/ticketing-system-backend/src/controllers/memberController.js:30:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-06-05 16:14:08"}
+{"level":"info","message":"[49b6a4d5-905a-494f-bb2d-33711475b8a7] POST /api/members","timestamp":"2026-06-05 16:17:35"}
+{"details":{"organization":"\"organization\" length must be 24 characters long","role_id":"\"role_id\" length must be 24 characters long"},"level":"warn","message":"[49b6a4d5-905a-494f-bb2d-33711475b8a7] Validation/AppError: Validation failed","path":"/api/members","timestamp":"2026-06-05 16:17:35"}
+{"level":"info","message":"[01ccc8db-3747-4813-a5b4-0f6d74f8761a] GET /api/roles","timestamp":"2026-06-05 16:18:02"}
+{"level":"info","message":"[0d35e3b9-c0c0-4cdf-8340-25c7e3723db6] POST /api/members","timestamp":"2026-06-05 16:18:19"}
+{"level":"error","message":"[0d35e3b9-c0c0-4cdf-8340-25c7e3723db6] Unexpected error: password is not defined","path":"/api/members","stack":"ReferenceError: password is not defined\n    at createMember (file:///F:/nutanprojects/ticketing-system-backend/src/controllers/memberController.js:30:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-06-05 16:18:19"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:18:44"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:18:44"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:18:56"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:18:56"}
+{"level":"info","message":"[754ebf1b-5987-4420-9516-91fda280acbf] POST /api/members","timestamp":"2026-06-05 16:18:57"}
+{"level":"error","message":"[754ebf1b-5987-4420-9516-91fda280acbf] Unexpected error: password is not defined","path":"/api/members","stack":"ReferenceError: password is not defined\n    at createMember (file:///F:/nutanprojects/ticketing-system-backend/src/controllers/memberController.js:30:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-06-05 16:18:57"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:19:40"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:19:41"}
+{"level":"info","message":"[17b06f9a-6808-49c8-b260-115df2fed0d6] POST /api/members","timestamp":"2026-06-05 16:19:52"}
+{"level":"error","message":"[17b06f9a-6808-49c8-b260-115df2fed0d6] Unexpected error: password is not defined","path":"/api/members","stack":"ReferenceError: password is not defined\n    at createMember (file:///F:/nutanprojects/ticketing-system-backend/src/controllers/memberController.js:30:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2026-06-05 16:19:52"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:20:21"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:20:21"}
+{"level":"info","message":"[e1b43f99-cb77-4dfb-aceb-1704a0d2417d] POST /api/members","timestamp":"2026-06-05 16:20:22"}
+{"level":"info","message":"[f0ed97cc-49e9-4bb8-a816-8affdb2db57d] GET /api/roles","timestamp":"2026-06-05 16:21:33"}
+{"level":"info","message":"[fc09290b-2aa6-4ea7-b503-ba0bb1b22864] GET /api/roles/search?role_name=PC","timestamp":"2026-06-05 16:21:48"}
+{"level":"info","message":"[1903b791-715e-40a5-a84b-27e05aa0cb96] GET /api/organizations","timestamp":"2026-06-05 16:22:19"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:27:08"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:27:08"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:27:19"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:27:19"}
+{"level":"info","message":"[7c1b6645-5ece-4cb5-8a0a-26e2e3f17c9c] POST /api/organizations","timestamp":"2026-06-05 16:29:08"}
+{"level":"error","message":"[7c1b6645-5ece-4cb5-8a0a-26e2e3f17c9c] Unexpected error: E11000 duplicate key error collection: nss-mistools_db.organizations index: orgn_id_1 dup key: { orgn_id: \"ORG001\" }","path":"/api/organizations","stack":"MongoServerError: E11000 duplicate key error collection: nss-mistools_db.organizations index: orgn_id_1 dup key: { orgn_id: \"ORG001\" }\n    at InsertOneOperation.handleOk (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at executeOperationWithRetries (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:194:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async executeOperation (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:83:16)\n    at async Collection.insertOne (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\collection.js:154:16)\n    at async model.$__save (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:428:16)\n    at async model.save (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:667:5)\n    at async Function.create (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:2747:5)\n    at async createOrganization (file:///F:/nutanprojects/ticketing-system-backend/src/controllers/organizationController.js:11:17)","timestamp":"2026-06-05 16:29:08"}
+{"level":"info","message":"[ef9374ac-a2fe-4d6e-ab94-915abaf8c4ab] POST /api/organizations","timestamp":"2026-06-05 16:29:20"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:31:22"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:31:22"}
+{"level":"info","message":"[7fba04d2-08fa-4f2d-ade5-5945f9b22742] POST /api/organizations","timestamp":"2026-06-05 16:31:24"}
+{"level":"error","message":"[7fba04d2-08fa-4f2d-ade5-5945f9b22742] Unexpected error: E11000 duplicate key error collection: nss-mistools_db.organizations index: orgn_id_1 dup key: { orgn_id: \"ORG002\" }","path":"/api/organizations","stack":"MongoServerError: E11000 duplicate key error collection: nss-mistools_db.organizations index: orgn_id_1 dup key: { orgn_id: \"ORG002\" }\n    at InsertOneOperation.handleOk (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at executeOperationWithRetries (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:194:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async executeOperation (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:83:16)\n    at async Collection.insertOne (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\collection.js:154:16)\n    at async model.$__save (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:428:16)\n    at async model.save (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:667:5)\n    at async Function.create (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:2747:5)\n    at async createOrganization (file:///F:/nutanprojects/ticketing-system-backend/src/controllers/organizationController.js:11:17)","timestamp":"2026-06-05 16:31:24"}
+{"level":"info","message":"[969ca9b9-3b15-4448-97ce-1deac8774ac3] POST /api/organizations","timestamp":"2026-06-05 16:31:40"}
+{"level":"info","message":"Media_Corner > Static Path: F:\\nutanprojects\\ticketing-system-backend\\uploads\\media_corner","timestamp":"2026-06-05 16:32:31"}
+{"level":"info","message":"Server running on port 5001","timestamp":"2026-06-05 16:32:31"}
+{"level":"info","message":"[0f91366e-d230-42ef-b88b-4bbfc759d1b6] POST /api/organizations","timestamp":"2026-06-05 16:32:51"}
+{"level":"error","message":"[0f91366e-d230-42ef-b88b-4bbfc759d1b6] Unexpected error: E11000 duplicate key error collection: nss-mistools_db.organizations index: orgn_id_1 dup key: { orgn_id: \"ORG003\" }","path":"/api/organizations","stack":"MongoServerError: E11000 duplicate key error collection: nss-mistools_db.organizations index: orgn_id_1 dup key: { orgn_id: \"ORG003\" }\n    at InsertOneOperation.handleOk (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\insert.js:51:19)\n    at executeOperationWithRetries (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:194:34)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async executeOperation (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\operations\\execute_operation.js:83:16)\n    at async Collection.insertOne (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongodb\\lib\\collection.js:154:16)\n    at async model.$__save (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:428:16)\n    at async model.save (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:667:5)\n    at async Function.create (F:\\nutanprojects\\ticketing-system-backend\\node_modules\\mongoose\\lib\\model.js:2747:5)\n    at async createOrganization (file:///F:/nutanprojects/ticketing-system-backend/src/controllers/organizationController.js:11:17)","timestamp":"2026-06-05 16:32:51"}
+{"level":"info","message":"[549b1a33-e80e-48b3-a2af-da840d216434] POST /api/organizations","timestamp":"2026-06-05 16:32:57"}

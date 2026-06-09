@@ -1,27 +1,24 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import authRoutes from './modules/auth/auth.routes.js';
 import healthRoutes from './modules/health/health.routes.js';
+import rbacRoutes from './modules/rbac/rbac.routes.js';
+import userRoutes from './modules/users/user.routes.js';
 import { errorHandler } from './middleware/error.middleware.js';
 import { connectDB } from './config/db.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
 // ── CORS ─────────────────────────────────────────────────────────────────────
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
-    .split(',')
-    .map((o) => o.trim());
-
 app.use(
     cors({
-        origin: (origin, callback) => {
-            // Allow requests with no origin (e.g. Postman, curl, server-to-server)
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error(`CORS: origin '${origin}' not allowed`));
-            }
-        },
+        origin: true, // Reflect the request origin — allows all origins
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
@@ -29,6 +26,9 @@ app.use(
 );
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use('/admin', express.static(path.join(__dirname, 'public')));
 
 // ── DB connection middleware (serverless-safe) ───────────────────────────────
 // On Vercel there is no persistent process, so server.js is never executed.
@@ -45,6 +45,8 @@ app.use(async (_req, _res, next) => {
 // ── Routes ──────────────────────────────────────────────────────────────────
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/rbac', rbacRoutes);
+app.use('/api/users', userRoutes);
 
 // ── 404 catch-all ───────────────────────────────────────────────────────────
 app.use((req, res) => {

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RBAC Admin Dashboard - NSS Backend</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-glow: rgba(99, 102, 241, 0.4);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── CONTAINER ──────────────────────────────────────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ── HEADER ────────────────────────────────────────────────────────────── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #a5b4fc, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-badge {
+      background: rgba(99, 102, 241, 0.2);
+      border: 1px solid var(--primary);
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #c7d2fe;
+    }
+
+    .btn {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid var(--danger);
+      color: #fca5a5;
+    }
+
+    .btn-danger:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ── NOTIFICATIONS ──────────────────────────────────────────────────────── */
+    #notification-area {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      max-width: 400px;
+    }
+
+    .notification {
+      background: rgba(30, 41, 59, 0.95);
+      border-left: 4px solid var(--primary);
+      border-radius: 6px;
+      padding: 1rem;
+      box-shadow: var(--glass-shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      animation: slideIn 0.3s ease forwards;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .notification.success { border-left-color: var(--success); }
+    .notification.error { border-left-color: var(--danger); }
+    .notification.warning { border-left-color: var(--warning); }
+
+    .notification-content {
+      font-size: 0.9rem;
+    }
+
+    .notification-title {
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .notification-close {
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* ── LOGIN SECTION ──────────────────────────────────────────────────────── */
+    #login-section {
+      max-width: 500px;
+      margin: 5rem auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    #login-section h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .input-control {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: white;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .input-control:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .quick-login-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+      border-top: 1px solid var(--card-border);
+      padding-top: 1.5rem;
+    }
+
+    .quick-login-title {
+      grid-column: span 2;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── DASHBOARD LAYOUT ───────────────────────────────────────────────────── */
+    #dashboard-section {
+      display: none;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .tab-btn {
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-btn.active {
+      color: white;
+      background: var(--primary);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+    }
+
+    /* ── CARDS & FORMS ──────────────────────────────────────────────────────── */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 900px) {
+      .dashboard-grid.split {
+        grid-template-columns: 1fr 2fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      font-size: 0.95rem;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* ── PRIVILEGES ASSIGNMENT UI ───────────────────────────────────────────── */
+    .privileges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid var(--card-border);
+      padding: 1rem;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .privilege-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .privilege-checkbox-item input {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ── USER ROLE DROPDOWN ─────────────────────────────────────────────────── */
+    .role-select {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--card-border);
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .role-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .action-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="notification-area"></div>
+
+  <div class="container">
+
+    <!-- ── AUTH LOGIN PANEL ─────────────────────────────────────────────────── -->
+    <section id="login-section">
+      <h2>RBAC Admin Authentication</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" class="input-control" required placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" class="input-control" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Authenticate</button>
+      </form>
+
+      <div class="quick-login-grid">
+        <div class="quick-login-title">Quick Test Login (Password: Password123!)</div>
+        <button class="btn btn-secondary" onclick="quickLogin('superadmin@nss.com')">Superadmin</button>
+        <button class="btn btn-secondary" onclick="quickLogin('nssadmin@nss.com')">NSS Admin</button>
+        <button class="btn btn-secondary" onclick="quickLogin('nssuser@nss.com')">NSS User</button>
+        <button class="btn btn-secondary" onclick="quickLogin('pmuadmin@nss.com')">PMU Admin</button>
+        <button class="btn btn-secondary" onclick="quickLogin('pmuuser@nss.com')">PMU User</button>
+        <button class="btn btn-secondary" onclick="quickLogin('coordinator@nss.com')">Coordinator</button>
+      </div>
+    </section>
+
+    <!-- ── ADMIN DASHBOARD PANEL ────────────────────────────────────────────── -->
+    <section id="dashboard-section">
+      <header>
+        <div>
+          <h1>RBAC Admin Dashboard</h1>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem;">Manage resources, privileges, roles, and user assignments</p>
+        </div>
+        <div class="user-info">
+          <span class="user-badge" id="current-user-email">guest</span>
+          <span class="user-badge" id="current-user-role" style="background: rgba(16, 185, 129, 0.2); border-color: var(--success); color: #a7f3d0;">role</span>
+          <button class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </header>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('resources')">Resources</button>
+        <button class="tab-btn" onclick="switchTab('privileges')">Privileges</button>
+        <button class="tab-btn" onclick="switchTab('roles')">Roles & Permissions</button>
+        <button class="tab-btn" onclick="switchTab('users')">User Management</button>
+      </div>
+
+      <!-- Tab Content: Resources -->
+      <div id="tab-resources" class="tab-content dashboard-grid split">
+        <div class="card">
+          <h3>Create Resource</h3>
+          <form id="create-resource-form">
+            <div class="form-group">
+              <label for="resource-name">Resource Name</label>
+              <input type="text" id="resource-name" class="input-control" required placeholder="e.g. Program_Unit">
+            </div>
+            <div class="form-group">
+              <label for="resource-description">Description</label>
+              <input type="text" id="resource-description" class="input-control" placeholder="Optional description">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Create Resource</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>System Resources</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody id="resources-table-body">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Privileges -->
+      <div id="tab-privileges" class="tab-content dashboard-grid split" style="display: none;">
+        <div class="card">
+          <h3>Create Privilege</h3>
+          <form id="create-privilege-form">
+            <div class="form-group">
+              <label for="privilege-name">Privilege Name</label>
+              <input type="text" id="privilege-name" class="input-control" required placeholder="e.g. READ_PROGRAM_UNIT">
+            </div>
+            <div class="form-group">
+              <label for="privilege-resource">Resource</label>
+              <select id="privilege-resource" class="input-control" required>
+                <!-- Dynamically loaded -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="privilege-action">Action</label>
+              <select id="privilege-action" class="input-control" required>
+                <option value="READ">READ</option>
+                <option value="CREATE">CREATE</option>
+                <option value="UPDATE">UPDATE</option>
+                <option value="DELETE">DELETE</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="privilege-description">Description</label>
+              <input type="text" id="privilege-description" class="input-control" placeholder="Optional description">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Create Privilege</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>System Privileges</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Resource</th>
+                  <th>Action</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody id="privileges-table-body">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Roles -->
+      <div id="tab-roles" class="tab-content dashboard-grid" style="display: none;">
+        <div class="dashboard-grid split">
+          <div class="card">
+            <h3>Create Role</h3>
+            <form id="create-role-form">
+              <div class="form-group">
+                <label for="role-name">Role Name</label>
+                <input type="text" id="role-name" class="input-control" required placeholder="e.g. Finance_Coordinator">
+              </div>
+              <div class="form-group">
+                <label for="role-description">Description</label>
+                <input type="text" id="role-description" class="input-control" placeholder="Optional description">
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Create Role</button>
+            </form>
+          </div>
+          <div class="card" id="assign-privileges-card">
+            <h3>Assign Permissions to Role</h3>
+            <div class="form-group">
+              <label for="role-select-assign">Select Role</label>
+              <select id="role-select-assign" class="input-control" onchange="loadRolePermissionsAssigned(this.value)">
+                <!-- Dynamically loaded -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Select Privileges</label>
+              <div class="privileges-grid" id="role-privileges-checkbox-grid">
+                <!-- Dynamically loaded checkboxes -->
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="saveRolePrivileges()" style="width: 100%;">Save Role Permissions</button>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h3>System Roles Mappings</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Role Name</th>
+                  <th>Description</th>
+                  <th>Assigned Privileges</th>
+                </tr>
+              </thead>
+              <tbody id="roles-table-body">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Users -->
+      <div id="tab-users" class="tab-content" style="display: none;">
+        <div class="card">
+          <h3>User Listing & Assignment</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Email</th>
+                  <th>Current Role</th>
+                  <th>Created At</th>
+                  <th>Change Role</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- ── FRONTEND CONTROLLER LOGIC ──────────────────────────────────────────── -->
+  <script>
+    let token = localStorage.getItem('rbac_token') || null;
+    let currentUser = null;
+    let cachedRoles = [];
+    let cachedPrivileges = [];
+    let cachedResources = [];
+
+    // ── INITIALIZATION ───────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      if (token) {
+        checkTokenAndLoadDashboard();
+      } else {
+        showLogin();
+      }
+
+      // Hook Forms
+      document.getElementById('login-form').addEventListener('submit', handleLoginSubmit);
+      document.getElementById('create-resource-form').addEventListener('submit', handleResourceSubmit);
+      document.getElementById('create-privilege-form').addEventListener('submit', handlePrivilegeSubmit);
+      document.getElementById('create-role-form').addEventListener('submit', handleRoleSubmit);
+    });
+
+    // ── NOTIFICATION COMPONENT ───────────────────────────────────────────────
+    function showNotification(title, message, type = 'success') {
+      const container = document.getElementById('notification-area');
+      const notif = document.createElement('div');
+      notif.className = `notification ${type}`;
+      notif.innerHTML = `
+        <div class="notification-content">
+          <div class="notification-title">${title}</div>
+          <div>${message}</div>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.remove()">&times;</button>
+      `;
+      container.appendChild(notif);
+      setTimeout(() => notif.remove(), 5000);
+    }
+
+    // ── API REQUEST HELPER ────────────────────────────────────────────────────
+    async function apiCall(endpoint, options = {}) {
+      const headers = { 'Content-Type': 'application/json', ...options.headers };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const res = await fetch(`http://localhost:5000${endpoint}`, { ...options, headers });
+      const data = await res.json();
+
+      if (res.status === 401) {
+        showNotification('Session Expired', 'Please login again.', 'error');
+        logout();
+        throw new Error('Unauthorized');
+      }
+
+      if (res.status === 403) {
+        showNotification('Access Denied', data.message || 'Forbidden operation.', 'error');
+        throw new Error('Forbidden');
+      }
+
+      if (res.status >= 400) {
+        showNotification('API Error', data.message || 'Something went wrong.', 'error');
+        throw new Error(data.message || 'API Error');
+      }
+
+      return data;
+    }
+
+    // ── AUTHENTICATION FLOWS ─────────────────────────────────────────────────
+    function showLogin() {
+      document.getElementById('login-section').style.display = 'block';
+      document.getElementById('dashboard-section').style.display = 'none';
+    }
+
+    function showDashboard() {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('dashboard-section').style.display = 'block';
+      
+      document.getElementById('current-user-email').textContent = currentUser.email;
+      document.getElementById('current-user-role').textContent = currentUser.role_id?.name || 'No Role';
+      
+      // Load current active tab data
+      switchTab('resources');
+    }
+
+    async function checkTokenAndLoadDashboard() {
+      try {
+        const res = await apiCall('/api/auth/me');
+        currentUser = res.data.user;
+        showDashboard();
+      } catch (err) {
+        logout();
+      }
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      try {
+        const res = await apiCall('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password })
+        });
+        
+        token = res.token;
+        localStorage.setItem('rbac_token', token);
+        currentUser = res.data.user;
+        
+        showNotification('Authenticated', 'Access granted to system dashboard.', 'success');
+        showDashboard();
+      } catch (err) {
+        // Handled by apiCall notification
+      }
+    }
+
+    function quickLogin(email) {
+      document.getElementById('login-email').value = email;
+      document.getElementById('login-password').value = 'Password123!';
+      document.getElementById('login-form').dispatchEvent(new Event('submit'));
+    }
+
+    function logout() {
+      token = null;
+      currentUser = null;
+      localStorage.removeItem('rbac_token');
+      showLogin();
+    }
+
+    // ── TAB SYSTEM ───────────────────────────────────────────────────────────
+    function switchTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      // Show active tab
+      document.getElementById(`tab-${tabName}`).style.display = 'grid';
+      event.target.classList.add('active');
+
+      // Refresh data for specific tab
+      if (tabName === 'resources') loadResources();
+      if (tabName === 'privileges') loadPrivileges();
+      if (tabName === 'roles') loadRoles();
+      if (tabName === 'users') loadUsers();
+    }
+
+    // ── RESOURCES CRUD ───────────────────────────────────────────────────────
+    async function loadResources() {
+      try {
+        const res = await apiCall('/api/rbac/resources');
+        cachedResources = res.data.resources;
+        
+        const tbody = document.getElementById('resources-table-body');
+        tbody.innerHTML = '';
+        
+        cachedResources.forEach(r => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>${r._id}</code></td>
+            <td style="font-weight: 500; color: #a5b4fc;">${r.name}</td>
+            <td style="color: var(--text-muted);">${r.description || '-'}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        // Update Resource dropdown in Privileges tab
+        const select = document.getElementById('privilege-resource');
+        select.innerHTML = '';
+        cachedResources.forEach(r => {
+          const opt = document.createElement('option');
+          opt.value = r._id;
+          opt.textContent = r.name;
+          select.appendChild(opt);
+        });
+
+      } catch (err) {}
+    }
+
+    async function handleResourceSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('resource-name').value;
+      const description = document.getElementById('resource-description').value;
+
+      try {
+        await apiCall('/api/rbac/resources', {
+          method: 'POST',
+          body: JSON.stringify({ name, description })
+        });
+        showNotification('Resource Created', `Resource "${name}" created successfully.`, 'success');
+        document.getElementById('create-resource-form').reset();
+        loadResources();
+      } catch (err) {}
+    }
+
+    // ── PRIVILEGES CRUD ──────────────────────────────────────────────────────
+    async function loadPrivileges() {
+      try {
+        const res = await apiCall('/api/rbac/privileges');
+        cachedPrivileges = res.data.privileges;
+        
+        const tbody = document.getElementById('privileges-table-body');
+        tbody.innerHTML = '';
+        
+        cachedPrivileges.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td style="font-weight: 500; color: #f472b6;">${p.name}</td>
+            <td><code>${p.resource?.name || 'Unknown'}</code></td>
+            <td><span class="user-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: var(--success); font-size: 0.75rem;">${p.action}</span></td>
+            <td style="color: var(--text-muted);">${p.description || '-'}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {}
+    }
+
+    async function handlePrivilegeSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('privilege-name').value;
+      const resource = document.getElementById('privilege-resource').value;
+      const action = document.getElementById('privilege-action').value;
+      const description = document.getElementById('privilege-description').value;
+
+      try {
+        await apiCall('/api/rbac/privileges', {
+          method: 'POST',
+          body: JSON.stringify({ name, resource, action, description })
+        });
+        showNotification('Privilege Created', `Privilege "${name}" created successfully.`, 'success');
+        document.getElementById('create-privilege-form').reset();
+        loadPrivileges();
+      } catch (err) {}
+    }
+
+    // ── ROLES CRUD & PERMISSIONS MAPPING ─────────────────────────────────────
+    async function loadRoles() {
+      try {
+        const res = await apiCall('/api/rbac/roles');
+        cachedRoles = res.data.roles;
+
+        // Fetch privileges to build checkboxes
+        const privRes = await apiCall('/api/rbac/privileges');
+        cachedPrivileges = privRes.data.privileges;
+
+        // Render Roles Table
+        const tbody = document.getElementById('roles-table-body');
+        tbody.innerHTML = '';
+        
+        cachedRoles.forEach(role => {
+          const privBadges = role.privileges.map(p => 
+            `<span class="user-badge" style="font-size: 0.75rem; margin: 0.1rem; background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.3); color: #c7d2fe;">${p.name}</span>`
+          ).join(' ');
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td style="font-weight: 500; color: #38bdf8;">${role.name}</td>
+            <td style="color: var(--text-muted); font-size: 0.85rem;">${role.description || '-'}</td>
+            <td>${privBadges || '<span style="color: var(--text-muted); font-style: italic;">No Permissions</span>'}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        // Load Role Selector for Assignment
+        const select = document.getElementById('role-select-assign');
+        select.innerHTML = '<option value="">-- Choose Role --</option>';
+        cachedRoles.forEach(role => {
+          const opt = document.createElement('option');
+          opt.value = role._id;
+          opt.textContent = role.name;
+          select.appendChild(opt);
+        });
+
+        // Build Privileges Checkboxes
+        const checkboxGrid = document.getElementById('role-privileges-checkbox-grid');
+        checkboxGrid.innerHTML = '';
+        cachedPrivileges.forEach(p => {
+          const label = document.createElement('label');
+          label.className = 'privilege-checkbox-item';
+          label.innerHTML = `
+            <input type="checkbox" name="role-privilege" value="${p._id}">
+            <span>${p.name}</span>
+          `;
+          checkboxGrid.appendChild(label);
+        });
+
+      } catch (err) {}
+    }
+
+    async function handleRoleSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('role-name').value;
+      const description = document.getElementById('role-description').value;
+
+      try {
+        await apiCall('/api/rbac/roles', {
+          method: 'POST',
+          body: JSON.stringify({ name, description })
+        });
+        showNotification('Role Created', `Role "${name}" created successfully.`, 'success');
+        document.getElementById('create-role-form').reset();
+        loadRoles();
+      } catch (err) {}
+    }
+
+    function loadRolePermissionsAssigned(roleId) {
+      if (!roleId) {
+        document.querySelectorAll('input[name="role-privilege"]').forEach(cb => cb.checked = false);
+        return;
+      }
+
+      const role = cachedRoles.find(r => r._id === roleId);
+      if (!role) return;
+
+      const rolePrivIds = role.privileges.map(p => p._id);
+      
+      document.querySelectorAll('input[name="role-privilege"]').forEach(cb => {
+        cb.checked = rolePrivIds.includes(cb.value);
+      });
+    }
+
+    async function saveRolePrivileges() {
+      const roleId = document.getElementById('role-select-assign').value;
+      if (!roleId) {
+        showNotification('Select Role', 'Please select a role to map permissions.', 'warning');
+        return;
+      }
+
+      const checkedBoxes = document.querySelectorAll('input[name="role-privilege"]:checked');
+      const privileges = Array.from(checkedBoxes).map(cb => cb.value);
+
+      try {
+        await apiCall(`/api/rbac/roles/${roleId}/privileges`, {
+          method: 'PUT',
+          body: JSON.stringify({ privileges })
+        });
+        showNotification('Permissions Updated', 'Role permissions saved successfully.', 'success');
+        loadRoles();
+      } catch (err) {}
+    }
+
+    // ── USERS MANAGEMENT ─────────────────────────────────────────────────────
+    async function loadUsers() {
+      try {
+        const res = await apiCall('/api/users');
+        const users = res.data.users;
+        
+        // Make sure we have latest cached roles
+        if (cachedRoles.length === 0) {
+          const rolesRes = await apiCall('/api/rbac/roles');
+          cachedRoles = rolesRes.data.roles;
+        }
+
+        const tbody = document.getElementById('users-table-body');
+        tbody.innerHTML = '';
+
+        users.forEach(u => {
+          let options = cachedRoles.map(role => 
+            `<option value="${role._id}" ${u.role_id?._id === role._id ? 'selected' : ''}>${role.name}</option>`
+          ).join('');
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>${u._id}</code></td>
+            <td>${u.email}</td>
+            <td><span class="user-badge" style="background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">${u.role_id?.name || 'None'}</span></td>
+            <td style="color: var(--text-muted); font-size: 0.85rem;">${new Date(u.createdAt).toLocaleString()}</td>
+            <td>
+              <select class="role-select" onchange="updateUserRole('${u._id}', this.value)">
+                ${options}
+              </select>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {}
+    }
+
+    async function updateUserRole(userId, roleId) {
+      try {
+        await apiCall(`/api/users/${userId}/role`, {
+          method: 'PUT',
+          body: JSON.stringify({ role_id: roleId })
+        });
+        showNotification('User Updated', 'User role reassigned successfully.', 'success');
+        loadUsers();
+      } catch (err) {}
+    }
+  </script>
+</body>
+</html>

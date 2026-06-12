@@ -1,0 +1,1602 @@
+{
+  "info": {
+    "_postman_id": "843f7256-bc83-4f2b-976b-580eea5623b1",
+    "name": "NSS MIS Tools Backend - Full CRUD",
+    "description": "CRUD APIs for Roles, Organizations, Members, and MediaCorner",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46525298",
+    "_collection_link": "https://go.postman.co/collection/46525298-843f7256-bc83-4f2b-976b-580eea5623b1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Media Corner",
+      "item": [
+        {
+          "name": "Create Media Corner",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "x-app-key",
+                "value": "{{app_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "media_header",
+                  "value": "Bihar Election News 7",
+                  "type": "text"
+                },
+                {
+                  "key": "media_narration",
+                  "value": "The election commission announced the dates of Bihar Legislative Assembly polls.",
+                  "type": "text"
+                },
+                {
+                  "key": "media_url",
+                  "value": "https://x.com/Nalanda_index/status/1923450936556478887?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1923450936556478887%7Ctwgr%5Eaad4577a57faea8e06f34e4688d870e340754448%7Ctwcon%5Es1_c10&ref_url=https%3A%2F%2Fwww.indiatimes.com%2Fnews%2Findia%2Fraxaul-haldia-expressway-update-route-map-dpr-tender-status-how-it-will-boost-bihar-bengal-trade-by-2028%2Farticleshow%2F122755154.html",
+                  "type": "text"
+                },
+                {
+                  "key": "media_type",
+                  "value": "image",
+                  "type": "text"
+                },
+                {
+                  "key": "media_file",
+                  "type": "file",
+                  "src": "/C:/Users/letsc/Downloads/ipconfig-output.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/mediacorner",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "mediacorner"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Media Corner",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "x-app-key",
+                "value": "{{app_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "regd_mobile_no",
+                  "value": "7702000725",
+                  "type": "text"
+                },
+                {
+                  "key": "user_email_id",
+                  "value": "sanjay.jaiswal@gmail.com",
+                  "type": "text"
+                },
+                {
+                  "key": "media_header",
+                  "value": "Bihar Election News updated",
+                  "type": "text"
+                },
+                {
+                  "key": "media_narration",
+                  "value": "The election commission announced the dates of Bihar Legislative Assembly polls.",
+                  "type": "text"
+                },
+                {
+                  "key": "media_url",
+                  "value": "https://www.x.com/sanjayjaiswal",
+                  "type": "text"
+                },
+                {
+                  "key": "media_type",
+                  "value": "latestnews",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/mediacorner/?media_type=image",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "mediacorner",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "media_type",
+                  "value": "image"
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Media Corner by Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "x-app-key",
+                "value": "{{app_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/mediacorner/6a1a9ce1be603417df514cd2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "mediacorner",
+                "6a1a9ce1be603417df514cd2"
+              ],
+              "query": [
+                {
+                  "key": "leader_regd_mobile_no",
+                  "value": "7702000725",
+                  "disabled": true
+                },
+                {
+                  "key": "user_email_id",
+                  "value": "sanjay.jaiswal@gmail.com",
+                  "disabled": true
+                },
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Media Corner Asset",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "x-app-key",
+                "value": "{{app_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/mediacorner/asset/?media_file=media_file-1780128993986-10450465.jpg",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "mediacorner",
+                "asset",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "media_file",
+                  "value": "media_file-1780128993986-10450465.jpg"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Media Corner",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "x-app-key",
+                "value": "{{app_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "media_header",
+                  "value": "Demo of App",
+                  "type": "text"
+                },
+                {
+                  "key": "media_narration",
+                  "value": "Demo...............The election commission announced the dates of Bihar Legislative Assembly polls. updated data",
+                  "type": "text"
+                },
+                {
+                  "key": "media_url",
+                  "value": "https://www.x.com/sanjayjaiswal2345",
+                  "type": "text"
+                },
+                {
+                  "key": "media_type",
+                  "value": "image",
+                  "type": "text"
+                },
+                {
+                  "key": "media_file",
+                  "type": "file",
+                  "src": "/C:/Users/letsc/Downloads/facerderrorsnapshot.jpeg"
+                },
+                {
+                  "key": "id",
+                  "value": "6a1e7a5476309851678fcd50",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/mediacorner/6a1e7a5476309851678fcd50",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "mediacorner",
+                "6a1e7a5476309851678fcd50"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Media Corner",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              },
+              {
+                "key": "x-app-key",
+                "value": "{{app_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/mediacorner/6a1e7a5476309851678fcd50",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "mediacorner",
+                "6a1e7a5476309851678fcd50"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "Create Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"role_name\": \"NSS-Admin\" }"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Role by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/roles/{{roleId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "{{roleId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Role by Role Name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/roles/search?role_name={{role_name}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "role_name",
+                  "value": "{{role_name}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Role",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"role_name\": \"SuperAdmin\" }"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/roles/{{roleId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "{{roleId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Role",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/roles/{{roleId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                "{{roleId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Organizations",
+      "item": [
+        {
+          "name": "Create Organization",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"orgn_id\": \"ORG001\", \r\n    \"orgn_type\": \"NSS\", \r\n    \"orgn_name\": \"NSS Unit 2 Delhi University\", \r\n    \"orgn_address1\": \"North Campus\", \r\n    \"orgn_place\": \"Delhi\", \r\n    \"orgn_district\": \"6a2282b6b0fa36aec4086be0\", \r\n    \"orgn_state\": \"6a227ea443b97d8d56225471\", \r\n    \"orgn_pincode\": \"110007\" \r\n    }"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/organizations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "organizations"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create Organization",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \"orgn_id\": \"ORG001\", \"orgn_type\": \"NSS\", \"orgn_name\": \"NSS Delhi University\", \"orgn_address1\": \"North Campus\", \"orgn_place\": \"Delhi\", \"orgn_district\": \"Central Delhi\", \"orgn_state\": \"Delhi\", \"orgn_pincode\": \"110007\" }"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/organizations",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "organizations"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "656"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"290-scTesDhKLzWYccsSi8Zii9viEXw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 05 Jun 2026 07:14:47 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"status\": 201,\n    \"message\": \"Organization created successfully\",\n    \"data\": {\n        \"orgn_id\": \"ORG001\",\n        \"orgn_type\": \"NSS\",\n        \"orgn_name\": \"NSS Delhi University\",\n        \"orgn_address1\": \"North Campus\",\n        \"orgn_place\": \"Delhi\",\n        \"orgn_district\": \"Central Delhi\",\n        \"orgn_state\": \"Delhi\",\n        \"orgn_pincode\": \"110007\",\n        \"_id\": \"6a227767c1fd7043da6f4aff\",\n        \"createdAt\": \"2026-06-05T07:14:47.656Z\",\n        \"updatedAt\": \"2026-06-05T07:14:47.656Z\",\n        \"__v\": 0\n    },\n    \"error\": {\n        \"id\": \"6a227767c1fd7043da6f4aff\",\n        \"orgn_name\": \"NSS Delhi University\",\n        \"orgn_type\": \"NSS\",\n        \"createdAt\": \"2026-06-05T07:14:47.656Z\"\n    },\n    \"requestId\": \"36db5411-ea94-42a7-8810-d29ef8ac2798\",\n    \"timestamp\": \"2026-06-05T07:14:47.710Z\",\n    \"path\": \"/api/organizations\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Organizations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/organizations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "organizations"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get All Organizations",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/organizations",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "organizations"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "540"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"21c-PHLXPk3zyFSbBYuATgQHOSD6anw\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 05 Jun 2026 07:14:58 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"Organizations retrieved successfully\",\n    \"data\": [\n        {\n            \"_id\": \"6a227767c1fd7043da6f4aff\",\n            \"orgn_id\": \"ORG001\",\n            \"orgn_type\": \"NSS\",\n            \"orgn_name\": \"NSS Delhi University\",\n            \"orgn_address1\": \"North Campus\",\n            \"orgn_place\": \"Delhi\",\n            \"orgn_district\": \"Central Delhi\",\n            \"orgn_state\": \"Delhi\",\n            \"orgn_pincode\": \"110007\",\n            \"createdAt\": \"2026-06-05T07:14:47.656Z\",\n            \"updatedAt\": \"2026-06-05T07:14:47.656Z\",\n            \"__v\": 0\n        }\n    ],\n    \"error\": null,\n    \"requestId\": \"4aabb7e6-96b7-4276-b477-63942998dc67\",\n    \"timestamp\": \"2026-06-05T07:14:58.089Z\",\n    \"path\": \"/api/organizations\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Organization by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/organizations/{{orgId}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "organizations",
+                "{{orgId}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Organization by ID",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/organizations/{{orgId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "organizations",
+                    "{{orgId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "562"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"232-y5aD8Y9tHn352sAkCenqOs3olCI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 05 Jun 2026 07:15:38 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"Organization retrieved successfully\",\n    \"data\": {\n        \"_id\": \"6a227767c1fd7043da6f4aff\",\n        \"orgn_id\": \"ORG001\",\n        \"orgn_type\": \"NSS\",\n        \"orgn_name\": \"NSS Delhi University\",\n        \"orgn_address1\": \"North Campus\",\n        \"orgn_place\": \"Delhi\",\n        \"orgn_district\": \"Central Delhi\",\n        \"orgn_state\": \"Delhi\",\n        \"orgn_pincode\": \"110007\",\n        \"createdAt\": \"2026-06-05T07:14:47.656Z\",\n        \"updatedAt\": \"2026-06-05T07:14:47.656Z\",\n        \"__v\": 0\n    },\n    \"error\": null,\n    \"requestId\": \"fd9401c9-6a74-49d8-b815-1ec58116531a\",\n    \"timestamp\": \"2026-06-05T07:15:38.198Z\",\n    \"path\": \"/api/organizations/6a227767c1fd7043da6f4aff\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Organization",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"orgn_name\": \"Updated NSS Delhi University\" }"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/organizations/{{orgId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "organizations",
+                "{{orgId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Organization",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/organizations/{{orgId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "organizations",
+                "{{orgId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Members",
+      "item": [
+        {
+          "name": "Create Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"name\": \"Amit Sharma\", \r\n    \"email\": \"amit.sharma@nssdu.in\", \r\n    \"role_id\": \"{{roleId}}\", \r\n    \"organization\": \"{{orgId}}\", \r\n    \"active\": true \r\n    }"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/members",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/members",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Member by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/members/{{memberId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "members",
+                "{{memberId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Member",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"active\": false }"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/members/{{memberId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "members",
+                "{{memberId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Member",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/members/{{memberId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "members",
+                "{{memberId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "MasterTemplate",
+      "item": [
+        {
+          "name": "Create MasterTemplate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"task_id\": \"MT001\",\n  \"task_name\": \"Database Setup\",\n  \"task_desc\": \"Initialize DB schema\",\n  \"priority\": \"High\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/mastertemplates",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "mastertemplates"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All MasterTemplates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/mastertemplates",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "mastertemplates"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get MasterTemplate By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/mastertemplates/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "mastertemplates",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update MasterTemplate",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"task_id\": \"MT001\",\n  \"task_name\": \"Database Setup Updated\",\n  \"task_desc\": \"Initialize DB schema with indexes\",\n  \"priority\": \"Medium\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/mastertemplates/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "mastertemplates",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete MasterTemplate",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/mastertemplates/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "mastertemplates",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Roll Out management",
+      "item": [
+        {
+          "name": "Create Rollout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orgn_id\": \"665f19f29d1e4b1234567888\",\n  \"tasks\": [\n    {\n      \"task_name\": \"Server Provisioning\",\n      \"task_desc\": \"Setup cloud servers\",\n      \"task_priority\": \"High\",\n      \"task_dependency\": \"\",\n      \"planned_start_date\": \"2026-06-05\",\n      \"planned_end_date\": \"2026-06-10\",\n      \"task_status\": \"Open\",\n      \"tracking_comments\": \"Initial rollout\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/rollouts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Rollouts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/rollouts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Rollout By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/rollouts/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouts",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Rollout By Org",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tasks\": [\n    {\n      \"task_name\": \"Server Provisioning Updated\",\n      \"task_desc\": \"Setup cloud servers with monitoring\",\n      \"task_priority\": \"Medium\",\n      \"task_status\": \"In-progress\",\n      \"tracking_comments\": \"Monitoring added\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/rollouts/org/{{orgn_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouts",
+                "org",
+                "{{orgn_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Rollout By Org",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/rollouts/org/{{orgn_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouts",
+                "org",
+                "{{orgn_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tasks For Org With Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/rollouttasks/org/{{orgn_id}}/tasks?task_priority=High&task_status=Open",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouttasks",
+                "org",
+                "{{orgn_id}}",
+                "tasks"
+              ],
+              "query": [
+                {
+                  "key": "task_priority",
+                  "value": "High"
+                },
+                {
+                  "key": "task_status",
+                  "value": "Open"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Task To Org",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"task_name\": \"Database Migration\",\n  \"task_desc\": \"Move DB to cloud\",\n  \"task_priority\": \"High\",\n  \"task_status\": \"Open\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/rollouttasks/org/{{orgn_id}}/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouttasks",
+                "org",
+                "{{orgn_id}}",
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Task For Org",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"task_name\": \"Database Migration Updated\",\n  \"task_desc\": \"Move DB to cloud with backup\",\n  \"task_priority\": \"Medium\",\n  \"task_status\": \"In-progress\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/rollouttasks/org/{{orgn_id}}/tasks/{{task_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouttasks",
+                "org",
+                "{{orgn_id}}",
+                "tasks",
+                "{{task_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Task For Org",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/rollouttasks/org/{{orgn_id}}/tasks/{{task_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "rollouttasks",
+                "org",
+                "{{orgn_id}}",
+                "tasks",
+                "{{task_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "StatesDistricts",
+      "item": [
+        {
+          "name": "Delete State By ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/location/states/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "states",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lookup Districts By State",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/location/states/UP/districts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "states",
+                "UP",
+                "districts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create State",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"state_id\": \"UP\",\n  \"state_name\": \"Uttar Pradesh\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/location/states",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "states"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update State By ID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"state_id\": \"UP\",\n  \"state_name\": \"Uttar Pradesh Updated\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/location/states/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "states",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create District",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"state_id\": \"UP\",\n  \"district_id\": \"UP01\",\n  \"district_name\": \"Lucknow\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/location/districts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "districts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update District By Composite ID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"district_name\": \"Lucknow Updated\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/location/states/UP/districts/UP01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "states",
+                "UP",
+                "districts",
+                "UP01"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get District By Composite ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/location/states/UP/districts/UP01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "states",
+                "UP",
+                "districts",
+                "UP01"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Districts (Search by State or Name)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/location/districts?state_id=UP&district_name=Lucknow",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "districts"
+              ],
+              "query": [
+                {
+                  "key": "state_id",
+                  "value": "UP"
+                },
+                {
+                  "key": "district_name",
+                  "value": "Lucknow"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All States",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/location/states",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "states"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete District By Composite ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/location/states/UP/districts/UP01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "location",
+                "states",
+                "UP",
+                "districts",
+                "UP01"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    }
+  ]
+}

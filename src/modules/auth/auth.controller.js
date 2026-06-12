@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../../models/User.js';
+import { User } from '../../models/userModel.js';
 import { Role } from '../../models/Role.js';
 
 // Helper to sign Access Token
@@ -44,13 +44,13 @@ const createSendToken = async (user, statusCode, res) => {
   user.password = undefined;
   user.refreshToken = undefined;
 
+  // Response shape must match what AuthProvider.login() reads:
+  //   data.accessToken, data.refreshToken, data.user
   res.status(statusCode).json({
     status: 'success',
-    token,
+    accessToken: token,
     refreshToken,
-    data: {
-      user
-    }
+    user
   });
 };
 
@@ -196,11 +196,12 @@ export const logout = async (req, res, next) => {
 };
 
 // Get current user profile
+// authService.getProfile() does: const { data } = await api.get('/auth/me')
+// then returns data — so we must return the user object directly at top level.
 export const profile = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user: req.user
-    }
-  });
+  const user = req.user.toObject ? req.user.toObject() : req.user;
+  delete user.password;
+  delete user.refreshToken;
+
+  res.status(200).json(user);
 };

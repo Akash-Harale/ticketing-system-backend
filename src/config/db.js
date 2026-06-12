@@ -1,4 +1,8 @@
+// .config/db.js
+
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 let cached = global.mongoose;
 
@@ -31,3 +35,16 @@ export const connectDB = async () => {
         throw error;   // Don't use process.exit(1)
     }
 };
+
+
+// If you want to support disconnectDB:
+export const disconnectDB = async () => {
+  try {
+    await mongoose.disconnect();
+    console.log("MongoDB disconnected");
+  } catch (err) {
+    console.error("MongoDB disconnection error:", err.message);
+  }
+};
+
+

@@ -5,27 +5,10 @@ dotenv.config();
 
 
 import app from './app.js';
-import { connectDB } from './config/db.js';
+import { connectDB, disconnectDB } from './config/db.js';
+import { logger } from './utils/logger.js';
 
 
-
-const multer = require('multer');
-const morgan = require('morgan');
-
-const logger = require('./utils/logger');
-const requestId = require('./middleware/requestId');
-const errorHandler = require('./middleware/errorHandler');
-
-
-// Static Image Routes
-// Define static path in .env file  22/Oct/2025
-//const mediaCornerPath = process.env.MEDIA_CORNER_PATH || path.join(process.cwd(), 'uploads', 'media_corner');
-const mediaCornerPath      = path.resolve(process.env.MEDIA_CORNER_PATH);
-
-console.log('Media_Corner > Static Path from .env param: ', mediaCornerPath);
-
-// Routes
-const toolsMediaCornerRoutes = require('./routes/toolsMediaCornerRoutes');
 
 const PORT = process.env.PORT || 5001;
 let server;

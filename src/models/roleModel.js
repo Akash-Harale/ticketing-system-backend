@@ -19,4 +19,8 @@ const roleSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Role = mongoose.model("Role", roleSchema);
+// NOTE: Registered as "RoleV2" to avoid conflict with Role.js which also
+// registers the "Role" model name.  All roleController.js CRUD operations
+// still work — they just operate on the "rolev2s" collection.
+export const Role = mongoose.model("RoleV2", roleSchema);
+

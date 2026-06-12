@@ -15,11 +15,11 @@ export const createMember = async (req, res, next) => {
   session.startTransaction();
 
   try {
-    const { name, email, role_id, organization } = req.body; // derive from body
+    const { name, email, mobile, role_id, organization } = req.body; // derive from body
 
     // Step 1: Create Member
     const member = await Member.create(
-      [{ name, email, role_id, organization }],
+      [{ name, email, mobile, role_id, organization }],
       { session }
     );
 
@@ -59,10 +59,11 @@ export const createMember = async (req, res, next) => {
 // ───────────────────────────────────────────────
 export const getMembers = async (req, res, next) => {
   try {
-    const { role_id, active } = req.query; // derive from query
+    const { role_id, active, organization } = req.query;
     const filter = {};
     if (role_id) filter.role_id = role_id;
     if (active !== undefined) filter.active = active;
+    if (organization) filter.organization = organization;
 
     const members = await Member.find(filter).populate("role_id organization");
     return sendResponse(res, 200, true, "Members retrieved successfully", members, null, req);

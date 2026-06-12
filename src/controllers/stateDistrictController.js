@@ -97,9 +97,19 @@ export const deleteDistrictByCompositeId = async (req, res, next) => {
 
 export const getDistrictsByState = async (req, res, next) => {
   try {
-    const { state_id } = req.params; // assign to temp variable
-    const districts = await DistrictMaster.find({ state_id });
-    if (!districts || districts.length === 0) throw new AppError(404, "No districts found for this state");
+    const { state_id } = req.params;
+
+    // state_id may be a Mongo ObjectId (sent by the frontend dropdown)
+    // OR a short string code like "MH" (used internally).
+    // First try to resolve via StateMaster when an ObjectId is given.
+    let stateCode = state_id;
+    if (/^[a-f\d]{24}$/i.test(state_id)) {
+      const state = await StateMaster.findById(state_id).lean();
+      if (!state) throw new AppError(404, "State not found");
+      stateCode = state.state_id;
+    }
+
+    const districts = await DistrictMaster.find({ state_id: stateCode }).lean();
     return sendResponse(res, 200, true, "Districts retrieved successfully", districts, null, req);
   } catch (err) {
     next(err);

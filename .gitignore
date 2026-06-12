@@ -3,3 +3,5 @@ node_modules
 docker*
 make*
 uploads
+combined.log*
+error.log*

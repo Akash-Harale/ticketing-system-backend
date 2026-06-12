@@ -10,10 +10,16 @@ import {
 
 import  validateRequest from "../middleware/validateRequest.js";
 import { organizationSchema, idSchema } from "../validators/organizationValidator.js";
+import { checkPermission } from "../middleware/rbac.middleware.js";
+import { protect } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.post("/", validateRequest({ body: organizationSchema }), createOrganization);
+// Authentication guard
+router.use(protect);
+
+// Authorization guard
+router.post("/", validateRequest({ body: organizationSchema }), checkPermission("program_unit", "CREATE"), createOrganization);
 router.get("/", getOrganizations);
 router.get("/:id", validateRequest({ params: idSchema }), getOrganizationById);
 router.put("/:id", validateRequest({ params: idSchema, body: organizationSchema }), updateOrganization);

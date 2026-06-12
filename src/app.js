@@ -1,124 +1,4 @@
-// ./app.js
 
-import cookieParser from 'cookie-parser';
-import path from 'path';
-import { fileURLToPath } from 'url';
-/*
-import express from 'express';
-import cors from 'cors';
-import authRoutes from './modules/auth/auth.routes.js';
-import healthRoutes from './modules/health/health.routes.js';
-import rbacRoutes from './modules/rbac/rbac.routes.js';
-import userRoutes from './modules/users/user.routes.js';
-import { errorHandler } from './middleware/error.middleware.js';
-import { connectDB } from './config/db.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const app = express();
-
-// ── CORS ─────────────────────────────────────────────────────────────────────
-app.use(
-    cors({
-        origin: true, // Reflect the request origin — allows all origins
-        credentials: true,
-        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-    }),
-);
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use('/admin', express.static(path.join(__dirname, 'public')));
-
-// ── DB connection middleware (serverless-safe) ───────────────────────────────
-// On Vercel there is no persistent process, so server.js is never executed.
-// This middleware ensures connectDB() is called (and cached) on every cold start.
-app.use(async (_req, _res, next) => {
-    try {
-        await connectDB();
-        next();
-    } catch (err) {
-        next(err);
-    }
-});
-
-// ── Routes ──────────────────────────────────────────────────────────────────
-app.use('/api/health', healthRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/rbac', rbacRoutes);
-app.use('/api/users', userRoutes);
-
-// Media Corner routes
-// Serve static files from /uploads/media_corner
-app.use('/media', (req, res, next) => {
-  console.log(`[${new Date().toISOString()}] Static hit: ${req.originalUrl} from ${req.ip}`);
-  next();
-}, express.static(mediaCornerPath));
- // or below without logging the hits
-//app.use('/media', express.static(mediaCornerPath));
-
-app.use('/api/mediacorner', toolsMediaCornerRoutes);
-
-// Health Check
-app.get('/ping', (req, res) => {
-  res.status(200).json({ message: 'Server is alive' });
-});
-
-
-// ── 404 Handler  - catch-all ───────────────────────────────────────────────────────────
-app.use((req, res) => {
-    res.status(404).json({ message: `Route ${req.originalUrl} not found.` });
-});
-
-// Multer & File Upload Error Handling with requestId
-app.use((err, req, res, next) => {
-  const requestId = req.requestId || 'N/A';
-
-  if (err instanceof multer.MulterError) {
-    // Multer-specific errors (e.g., file too large)
-    logger.warn(`[${requestId}] Multer error: ${err.message}`);
-    return res.status(400).json({
-      error: 'Multer error',
-      details: err.message,
-      requestId
-    });
-  }
-
-  if (err.message === 'Only image files (JPEG/JPG/PNG/GIF) are allowed!') {
-    // Custom file type error from your fileFilter
-    logger.warn(`[${requestId}] Invalid file type: ${err.message}`);
-    return res.status(400).json({
-      error: 'Invalid file type',
-      details: err.message,
-      requestId
-    });
-  }
-
-  if (err) {
-    // Generic errors during upload
-    logger.error(`[${requestId}] Upload error: ${err.message}`);
-    return res.status(500).json({
-      error: 'Server error',
-      details: err.message,
-      requestId
-    });
-  }
-
-  next(); // Pass to next middleware if no error
-});
-
-// ── Global error handler (must be last) ─────────────────────────────────────
-app.use(errorHandler);
-
-export default app;
-
-*/
-
-// ./app.js
-// src/app.js
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -139,6 +19,11 @@ import { masterTemplateRoutes } from "./routes/masterTemplateRoutes.js";
 import { rolloutRoutes } from "./routes/rolloutRoutes.js";
 import { rolloutTaskRoutes } from "./routes/rolloutTaskRoutes.js";
 import { MasterTemplate } from "./models/masterTemplate.js";
+// ── Model registration (side-effect imports) ────────────────────────────────
+// These models are referenced via mongoose populate() in auth flows.
+// Importing them here ensures Mongoose registers their schemas at startup.
+import "./models/Privilege.js";
+import "./models/Resource.js";
 import { stateDistrictRoutes } from "./routes/stateDistrictRoutes.js";
 import { roleRoutes } from "./routes/roleRoutes.js";
 

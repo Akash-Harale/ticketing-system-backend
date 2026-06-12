@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: false,
+      select: false,
     },
 
     // New relational fields
@@ -44,7 +45,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-/*
 // Hash password before save
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
@@ -55,7 +55,6 @@ userSchema.pre("save", async function () {
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
-*/
 
 export const User = mongoose.model("User", userSchema);
 

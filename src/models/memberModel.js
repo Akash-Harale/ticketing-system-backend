@@ -18,6 +18,11 @@ const memberSchema = new mongoose.Schema(
       lowercase: true,
       match: [/^\S+@\S+\.\S+$/, "Please provide a valid email address"],
     },
+    mobile: {
+      type: String,
+      required: [true, "Mobile number is required"],
+      match: [/^[0-9]{10}$/, "Please provide a valid 10-digit mobile number"],
+    },
     role_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Role",

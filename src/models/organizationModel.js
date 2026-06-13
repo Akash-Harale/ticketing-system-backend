@@ -24,15 +24,15 @@ const organizationSchema = new mongoose.Schema(
     orgn_address2: { type: String, trim: true },
     orgn_place: { type: String, trim: true },
     orgn_district: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "DistrictMaster",        // references DistrcitMaster model
-          required: true,
-        },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "DistrictMaster",        // references DistrcitMaster model
+      required: true,
+    },
     orgn_state: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "StateMaster",        // references DistrcitMaster model
-          required: true,
-        },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "StateMaster",        // references DistrcitMaster model
+      required: true,
+    },
     orgn_pincode: {
       type: String,
       match: [/^\d{6}$/, "Pincode must be 6 digits"],

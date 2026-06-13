@@ -5,3 +5,5 @@ make*
 uploads
 combined.log*
 error.log*
+*.log
+logs/*.logkw

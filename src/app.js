@@ -26,6 +26,7 @@ import "./models/Privilege.js";
 import "./models/Resource.js";
 import { stateDistrictRoutes } from "./routes/stateDistrictRoutes.js";
 import { roleRoutes } from "./routes/roleRoutes.js";
+import rbacRoutes from "./modules/rbac/rbac.routes.js";
 
 const app = express();
 
@@ -72,6 +73,7 @@ app.use("/api/rollouts", rolloutRoutes);
 app.use("/api/rollouttasks", rolloutTaskRoutes);
 app.use("/api/location", stateDistrictRoutes);
 app.use("/api/roles", roleRoutes);
+app.use("/api/rbac", rbacRoutes);
 
 // Health Check
 app.get("/ping", (req, res) => {

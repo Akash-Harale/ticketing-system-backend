@@ -65,7 +65,15 @@ export const getMembers = async (req, res, next) => {
     if (active !== undefined) filter.active = active;
     if (organization) filter.organization = organization;
 
-    const members = await Member.find(filter).populate("role_id organization");
+    const members = await Member.find(filter)
+      .populate("role_id")
+      .populate({
+        path: "organization",
+        populate: [
+          { path: "orgn_state" },
+          { path: "orgn_district" }
+        ]
+      });
     return sendResponse(res, 200, true, "Members retrieved successfully", members, null, req);
   } catch (err) {
     next(err);
@@ -78,7 +86,15 @@ export const getMembers = async (req, res, next) => {
 export const getMemberById = async (req, res, next) => {
   try {
     const { id } = req.params; // derive from params
-    const member = await Member.findById(id).populate("role_id organization");
+    const member = await Member.findById(id)
+      .populate("role_id")
+      .populate({
+        path: "organization",
+        populate: [
+          { path: "orgn_state" },
+          { path: "orgn_district" }
+        ]
+      });
     if (!member) throw new AppError(404, "Member not found");
     return sendResponse(res, 200, true, "Member retrieved successfully", member, null, req);
   } catch (err) {
@@ -97,7 +113,15 @@ export const updateMember = async (req, res, next) => {
     const member = await Member.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true,
-    }).populate("role_id organization");
+    })
+      .populate("role_id")
+      .populate({
+        path: "organization",
+        populate: [
+          { path: "orgn_state" },
+          { path: "orgn_district" }
+        ]
+      });
 
     if (!member) throw new AppError(404, "Member not found");
     return sendResponse(res, 200, true, "Member updated successfully", member, null, req);

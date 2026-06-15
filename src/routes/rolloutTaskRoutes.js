@@ -21,12 +21,16 @@ import {
   getTaskForOrg,
   updateTaskForOrg,
   deleteTaskForOrg,
+  getTasksForOrg,
 } from "../controllers/rolloutTaskController.js";
 
 const router = express.Router();
 
 // Add a task
 router.post("/org/:orgn_id/tasks", validateRequest({ body: rolloutSchema.extract("tasks") }), addTaskToOrg);
+
+// Get all tasks for an organization
+router.get("/org/:orgn_id/tasks", getTasksForOrg);
 
 // Get a task
 router.get("/org/:orgn_id/tasks/:task_id", getTaskForOrg);

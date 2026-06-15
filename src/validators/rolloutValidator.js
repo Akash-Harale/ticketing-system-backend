@@ -15,8 +15,15 @@ const taskSchema = Joi.object({
 });
 
 export const rolloutSchema = Joi.object({
+  campaign_id: Joi.string().hex().length(24).required(),
   orgn_id: Joi.string().hex().length(24).required(),
   tasks: Joi.array().items(taskSchema)
+});
+
+export const createCampaignSchema = Joi.object({
+  title: Joi.string().min(3).required(),
+  states: Joi.array().items(Joi.string()).min(1).required(),
+  districts: Joi.array().items(Joi.string()).min(1).required()
 });
 
 export const idSchema = Joi.object({

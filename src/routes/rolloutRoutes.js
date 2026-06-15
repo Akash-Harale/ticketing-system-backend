@@ -1,7 +1,7 @@
 // src/routes/rolloutRoutes.js
 import express from "express";
 import validateRequest from "../middleware/validateRequest.js";
-import { rolloutSchema, idSchema, querySchema } from "../validators/rolloutValidator.js";
+import { createCampaignSchema, idSchema, querySchema } from "../validators/rolloutValidator.js";
 import {
   createRollout,
   getRollouts,
@@ -13,7 +13,7 @@ import {
 const router = express.Router();
 
 // Create rollout
-router.post("/", validateRequest({ body: rolloutSchema }), createRollout);
+router.post("/", validateRequest({ body: createCampaignSchema }), createRollout);
 
 // Get rollouts with filters
 router.get("/", validateRequest({ query: querySchema }), getRollouts);

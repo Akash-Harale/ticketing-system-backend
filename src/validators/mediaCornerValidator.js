@@ -25,21 +25,23 @@ export const mediaCornerSchema = Joi.object({
 
   media_url: Joi.string()
     .uri({ scheme: ["http", "https"] })
-    .required()
+    .allow("", null)
+    .optional()
     .messages({
       "string.uri": "Media URL must be a valid HTTP/HTTPS link",
     }),
 
   media_type: Joi.string()
-    .valid("image", "video", "audio", "document")
+    .valid("image", "video", "audio", "document", "faq", "template", "pdf")
     .required()
     .messages({
-      "any.only": "Media type must be one of image, video, audio, or document",
+      "any.only": "Media type must be one of image, video, audio, document, faq, or template",
     }),
 
   media_file: Joi.string()
     .pattern(/\.(jpg|jpeg|png|gif|mp4|mp3|pdf)$/i)
-    .allow(null)
+    .allow("", null)
+    .optional()
     .messages({
       "string.pattern.base": "Media file must be a valid file type (jpg, jpeg, png, gif, mp4, mp3, pdf)",
     }),
@@ -54,10 +56,10 @@ export const idSchema = Joi.object({
 
 export const querySchema = Joi.object({
   media_type: Joi.string()
-    .valid("image", "video", "audio", "document")
+    .valid("image", "video", "audio", "document", "faq", "template")
     .optional()
     .messages({
-      "any.only": "Query media_type must be one of image, video, audio, or document",
+      "any.only": "Query media_type must be one of image, video, audio, document, faq, or template",
     }),
 });
 

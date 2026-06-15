@@ -44,6 +44,7 @@ const taskSchema = new mongoose.Schema({
 }, { _id: false });
 
 const rolloutSchema = new mongoose.Schema({
+  campaign_id: { type: mongoose.Schema.Types.ObjectId, ref: "RolloutCampaign", required: true },
   orgn_id: { type: mongoose.Schema.Types.ObjectId, ref: "Organization", required: true },
   tasks: [taskSchema]
 }, { timestamps: true });

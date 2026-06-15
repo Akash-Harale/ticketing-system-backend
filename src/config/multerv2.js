@@ -5,14 +5,14 @@ import fs from "fs";
 
 // File type filter (images + mp4 only)
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|gif|mp4/;
+  const allowedTypes = /jpeg|jpg|png|gif|mp4|pdf/;
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = allowedTypes.test(file.mimetype);
 
   if (extname && mimetype) {
     cb(null, true);
   } else {
-    cb(new Error("Only image files (JPEG/JPG/PNG/GIF) or MP4 are allowed!"), false);
+    cb(new Error("Only image files (JPEG/JPG/PNG/GIF/PDF) or MP4 are allowed!"), false);
   }
 };
 

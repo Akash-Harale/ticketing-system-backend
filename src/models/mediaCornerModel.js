@@ -19,19 +19,19 @@ const mediaCornerSchema = new mongoose.Schema(
     },
     media_url: {
       type: String,
-      required: [true, "Media URL is required"],
-      match: [/^https?:\/\/.+\..+/, "Please provide a valid URL"],
+      match: [/^(https?:\/\/.+\..+)?$/, "Please provide a valid URL"],
+      default: "",
     },
     media_type: {
       type: String,
       required: [true, "Media type is required"],
-      enum: ["image", "video", "audio", "document"],
+      enum: ["image", "video", "audio", "document", "faq", "template", "pdf"],
       index: true,
     },
     media_file: {
       type: String,
-      required: [true, "Media file is required"],
       trim: true,
+      default: "",
     },
     media_timestamp: {
       type: Date,

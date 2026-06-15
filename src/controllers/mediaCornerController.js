@@ -279,10 +279,13 @@ export const createMediaCorner = async (req, res, next) => {
 // Get All Media Corner by type
 export const getMediaCorner = async (req, res, next) => {
   try {
-    const records = await MediaCorner.find({ media_type: req.query.media_type });
+    const filter = {};
+    if (req.query.media_type) filter.media_type = req.query.media_type;
+    const records = await MediaCorner.find(filter);
     if (!records.length) throw new AppError(404, "No Media Corner data found");
 
     const hostUrl = `${process.env.HOST_URL}:${process.env.PORT}`;
+    console.log(hostUrl,'--------------hostUrl')
     const updatedRecords = records.map((record) => {
       const obj = record.toObject();
       obj.media_file_url = obj.media_file ? `${hostUrl}/media/${obj.media_file}` : null;

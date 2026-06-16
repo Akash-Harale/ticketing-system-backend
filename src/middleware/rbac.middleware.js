@@ -17,7 +17,8 @@ export const checkPermission = (resourceName, action) => {
       }
 
       // Bypass checks for Superadmin or Admin roles
-      if (userRole.name === 'Superadmin' || userRole.name === 'Super Admin' || userRole.name === 'Admin' || userRole.name === 'admin') {
+      const roleNameLower = (userRole.name || '').toLowerCase();
+      if (roleNameLower === 'superadmin' || roleNameLower === 'super admin' || roleNameLower === 'admin') {
         return next();
       }
 

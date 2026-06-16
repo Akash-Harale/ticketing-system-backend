@@ -11,7 +11,12 @@ import {
   addCampaignTargets,
 } from "../controllers/rolloutController.js";
 
+import { protect } from "../middleware/auth.middleware.js";
+
 const router = express.Router();
+
+// Apply protect middleware to all routes in this router
+router.use(protect);
 
 // Create rollout
 router.post("/", validateRequest({ body: createCampaignSchema }), createRollout);

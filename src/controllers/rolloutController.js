@@ -80,30 +80,31 @@ export const createRollout = async (req, res, next) => {
     // 2. Map tasks to Rollout taskSchema format
     let tasksToAssign = [];
     if (tasks && tasks.length > 0) {
-      tasksToAssign = tasks.map(t => ({
-        task_name: t.task_name,
-        task_desc: t.task_desc || "",
-        task_priority: t.task_priority || t.priority || "Low",
-        task_dependency: t.task_dependency || "",
-        planned_start_date: t.planned_start_date ? new Date(t.planned_start_date) : null,
-        planned_end_date: t.planned_end_date ? new Date(t.planned_end_date) : null,
-        task_status: "Open",
-        tracking_comments: ""
-      }));
+      tasksToAssign = tasks.map(t => {
+        if (!t.planned_start_date) {
+          throw new AppError(400, `Planned start date is required for task "${t.task_name}".`);
+        }
+        if (!t.planned_end_date) {
+          throw new AppError(400, `Planned end date is required for task "${t.task_name}".`);
+        }
+        const pStart = new Date(t.planned_start_date);
+        const pEnd = new Date(t.planned_end_date);
+        if (pEnd < pStart) {
+          throw new AppError(400, `Planned end date cannot be less than planned start date for task "${t.task_name}".`);
+        }
+        return {
+          task_name: t.task_name,
+          task_desc: t.task_desc || "",
+          task_priority: t.task_priority || t.priority || "Low",
+          task_dependency: t.task_dependency || "",
+          planned_start_date: pStart,
+          planned_end_date: pEnd,
+          task_status: "Open",
+          tracking_comments: ""
+        };
+      });
     } else {
-      // Fetch all tasks from MasterTemplate
-      const masterTasks = await MasterTemplate.find();
-      if (!masterTasks || masterTasks.length === 0) {
-        throw new AppError(400, "No tasks found in MasterTemplate to broadcast. Please add tasks to MasterTemplate first.");
-      }
-      tasksToAssign = masterTasks.map(t => ({
-        task_name: t.task_name,
-        task_desc: t.task_desc || "",
-        task_priority: t.priority || "Low",
-        task_dependency: "",
-        task_status: "Open",
-        tracking_comments: ""
-      }));
+      throw new AppError(400, "Planned tasks configuration with start and end dates is required to broadcast rollout.");
     }
 
     // 3. Create parent campaign record
@@ -135,9 +136,25 @@ export const getRollouts = async (req, res, next) => {
   try {
     const { orgn_id, task_priority, task_status } = req.query;
 
-    if (orgn_id) {
+    const userRoleName = (req.user?.role_id?.name || "").toLowerCase();
+    const isCoordinator = userRoleName === "porgram_unit_coordinator" || 
+                          userRoleName === "program_unit_coordinator" ||
+                          userRoleName === "coordinator" || 
+                          userRoleName === "pc";
+
+    let targetOrgnId = orgn_id;
+    if (isCoordinator) {
+      const org = req.user?.member_id?.organization || req.user?.orgn_id;
+      const userOrgId = org?._id?.toString() || org?.toString();
+      if (!userOrgId) {
+        throw new AppError(403, "Access Denied: No organization is assigned to your coordinator account.");
+      }
+      targetOrgnId = userOrgId;
+    }
+
+    if (targetOrgnId) {
       // Coordinator view: get all rollouts for their organization
-      let filter = { orgn_id };
+      let filter = { orgn_id: targetOrgnId };
       let records = await Rollout.find(filter).populate("campaign_id");
 
       // Apply task-level filters

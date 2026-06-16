@@ -69,18 +69,41 @@ const resolveOrganizations = async (states, districts) => {
 // Create rollout campaign and broadcast tasks
 export const createRollout = async (req, res, next) => {
   try {
-    const { title, states, districts } = req.body;
+    const { title, states, districts, tasks } = req.body;
 
-    // 1. Fetch all tasks from MasterTemplate
-    const masterTasks = await MasterTemplate.find();
-    if (!masterTasks || masterTasks.length === 0) {
-      throw new AppError(400, "No tasks found in MasterTemplate to broadcast. Please add tasks to MasterTemplate first.");
-    }
-
-    // 2. Resolve targeted Program Units
+    // 1. Resolve targeted Program Units
     const targetOrgs = await resolveOrganizations(states, districts);
     if (!targetOrgs || targetOrgs.length === 0) {
       throw new AppError(404, "No matching Program Units (Organizations of type PU) found for the selected states and districts.");
+    }
+
+    // 2. Map tasks to Rollout taskSchema format
+    let tasksToAssign = [];
+    if (tasks && tasks.length > 0) {
+      tasksToAssign = tasks.map(t => ({
+        task_name: t.task_name,
+        task_desc: t.task_desc || "",
+        task_priority: t.task_priority || t.priority || "Low",
+        task_dependency: t.task_dependency || "",
+        planned_start_date: t.planned_start_date ? new Date(t.planned_start_date) : null,
+        planned_end_date: t.planned_end_date ? new Date(t.planned_end_date) : null,
+        task_status: "Open",
+        tracking_comments: ""
+      }));
+    } else {
+      // Fetch all tasks from MasterTemplate
+      const masterTasks = await MasterTemplate.find();
+      if (!masterTasks || masterTasks.length === 0) {
+        throw new AppError(400, "No tasks found in MasterTemplate to broadcast. Please add tasks to MasterTemplate first.");
+      }
+      tasksToAssign = masterTasks.map(t => ({
+        task_name: t.task_name,
+        task_desc: t.task_desc || "",
+        task_priority: t.priority || "Low",
+        task_dependency: "",
+        task_status: "Open",
+        tracking_comments: ""
+      }));
     }
 
     // 3. Create parent campaign record
@@ -92,17 +115,7 @@ export const createRollout = async (req, res, next) => {
       sentDate: new Date()
     });
 
-    // 4. Map MasterTemplate tasks to Rollout taskSchema format
-    const tasksToAssign = masterTasks.map(t => ({
-      task_name: t.task_name,
-      task_desc: t.task_desc || "",
-      task_priority: t.priority || "Low",
-      task_dependency: "",
-      task_status: "Open",
-      tracking_comments: ""
-    }));
-
-    // 5. Create rollout document for each targeted Organization
+    // 4. Create rollout document for each targeted Organization
     const rolloutsToCreate = targetOrgs.map(org => ({
       campaign_id: campaign._id,
       orgn_id: org._id,
@@ -214,7 +227,8 @@ export const getRollouts = async (req, res, next) => {
         status: campaign.status,
         totalStates: statesArray.length,
         totalInstitutes,
-        states: statesArray
+        states: statesArray,
+        tasks: rollouts[0]?.tasks || []
       });
     }
 
@@ -256,6 +270,88 @@ export const deleteRolloutByOrg = async (req, res, next) => {
     const record = await Rollout.findOneAndDelete({ orgn_id });
     if (!record) throw new AppError(404, "Rollout not found for organization");
     return sendResponse(res, 200, true, "Rollout deleted successfully", record, null, req);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Add target states/districts to rollout campaign
+export const addCampaignTargets = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { states, districts } = req.body;
+
+    const campaign = await RolloutCampaign.findById(id);
+    if (!campaign) {
+      throw new AppError(404, "Rollout campaign not found");
+    }
+
+    // 1. Resolve organizations for states & districts
+    const resolvedOrgs = await resolveOrganizations(states, districts);
+    if (!resolvedOrgs || resolvedOrgs.length === 0) {
+      throw new AppError(400, "The selected states and districts do not contain any active Program Units. Please select a different scope.");
+    }
+
+    // 2. Find organizations that already have a Rollout for this campaign
+    const existingRollouts = await Rollout.find({ campaign_id: id });
+    const existingOrgIds = existingRollouts.map(r => r.orgn_id.toString());
+    const resolvedOrgIds = resolvedOrgs.map(o => o._id.toString());
+
+    // 3. Identify which ones to add (in resolved but not in existing)
+    const orgIdsToAdd = resolvedOrgIds.filter(oid => !existingOrgIds.includes(oid));
+    const orgsToAdd = resolvedOrgs.filter(org => orgIdsToAdd.includes(org._id.toString()));
+
+    // 4. Identify which ones to remove (in existing but not in resolved)
+    const orgIdsToRemove = existingOrgIds.filter(oid => !resolvedOrgIds.includes(oid));
+
+    // 5. Delete rollouts for removed organizations
+    if (orgIdsToRemove.length > 0) {
+      await Rollout.deleteMany({
+        campaign_id: id,
+        orgn_id: { $in: orgIdsToRemove }
+      });
+    }
+
+    // 6. Create Rollout documents for the new organizations
+    if (orgsToAdd.length > 0) {
+      let tasksToAssign = [];
+      if (existingRollouts.length > 0) {
+        tasksToAssign = existingRollouts[0].tasks.map(t => ({
+          task_name: t.task_name,
+          task_desc: t.task_desc,
+          task_priority: t.task_priority,
+          task_dependency: t.task_dependency || "",
+          planned_start_date: t.planned_start_date,
+          planned_end_date: t.planned_end_date,
+          task_status: "Open",
+          tracking_comments: ""
+        }));
+      } else {
+        const masterTasks = await MasterTemplate.find();
+        tasksToAssign = masterTasks.map(t => ({
+          task_name: t.task_name,
+          task_desc: t.task_desc || "",
+          task_priority: t.priority || "Low",
+          task_dependency: "",
+          task_status: "Open",
+          tracking_comments: ""
+        }));
+      }
+
+      const rolloutsToCreate = orgsToAdd.map(org => ({
+        campaign_id: id,
+        orgn_id: org._id,
+        tasks: tasksToAssign
+      }));
+      await Rollout.insertMany(rolloutsToCreate);
+    }
+
+    // 7. Update states and districts exactly
+    campaign.states = states;
+    campaign.districts = districts;
+    await campaign.save();
+
+    return sendResponse(res, 200, true, "Rollout campaign targets updated successfully", campaign, null, req);
   } catch (err) {
     next(err);
   }

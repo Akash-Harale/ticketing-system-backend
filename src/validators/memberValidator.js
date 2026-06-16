@@ -8,6 +8,7 @@ export const memberSchema = Joi.object({
   mobile: Joi.string().pattern(/^[0-9]{10}$/).required(),
   role_id: Joi.string().hex().length(24).required(), // references Role._id
   organization: Joi.string().hex().length(24).required(), // references Organization._id
+  designation: Joi.string().allow("").optional(),
   active: Joi.boolean().default(true)
 });
 

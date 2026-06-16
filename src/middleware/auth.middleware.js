@@ -30,16 +30,28 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    // Find user and populate Role -> Privileges -> Resource
-    const currentUser = await User.findById(decoded.id).populate({
-      path: 'role_id',
-      populate: {
-        path: 'privileges',
+    // Find user and populate Role -> Privileges -> Resource, Member details, Org details
+    const currentUser = await User.findById(decoded.id)
+      .populate({
+        path: 'role_id',
         populate: {
-          path: 'resource'
+          path: 'privileges',
+          populate: {
+            path: 'resource'
+          }
         }
-      }
-    });
+      })
+      .populate({
+        path: 'member_id',
+        populate: {
+          path: 'organization',
+          populate: [
+            { path: 'orgn_state' },
+            { path: 'orgn_district' }
+          ]
+        }
+      })
+      .populate('orgn_id');
 
     if (!currentUser) {
       return res.status(401).json({

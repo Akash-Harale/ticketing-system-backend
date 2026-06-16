@@ -66,16 +66,29 @@ export const login = async (req, res, next) => {
       });
     }
 
-    // Find user and explicitly select password
-    const user = await User.findOne({ email }).select('+password').populate({
-      path: 'role_id',
-      populate: {
-        path: 'privileges',
+    // Find user and explicitly select password, populate Role -> Privileges -> Resource, Member details, Org details
+    const user = await User.findOne({ email })
+      .select('+password')
+      .populate({
+        path: 'role_id',
         populate: {
-          path: 'resource'
+          path: 'privileges',
+          populate: {
+            path: 'resource'
+          }
         }
-      }
-    });
+      })
+      .populate({
+        path: 'member_id',
+        populate: {
+          path: 'organization',
+          populate: [
+            { path: 'orgn_state' },
+            { path: 'orgn_district' }
+          ]
+        }
+      })
+      .populate('orgn_id');
 
     if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({
@@ -120,16 +133,29 @@ export const refresh = async (req, res, next) => {
       });
     }
 
-    // Find user and select password/refreshToken
-    const user = await User.findById(decoded.id).select('+refreshToken').populate({
-      path: 'role_id',
-      populate: {
-        path: 'privileges',
+    // Find user and select password/refreshToken, populate Role -> Privileges -> Resource, Member details, Org details
+    const user = await User.findById(decoded.id)
+      .select('+refreshToken')
+      .populate({
+        path: 'role_id',
         populate: {
-          path: 'resource'
+          path: 'privileges',
+          populate: {
+            path: 'resource'
+          }
         }
-      }
-    });
+      })
+      .populate({
+        path: 'member_id',
+        populate: {
+          path: 'organization',
+          populate: [
+            { path: 'orgn_state' },
+            { path: 'orgn_district' }
+          ]
+        }
+      })
+      .populate('orgn_id');
 
     if (!user) {
       return res.status(401).json({

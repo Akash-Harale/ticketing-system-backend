@@ -323,7 +323,7 @@ Response piping: stream.pipe(res) sends data directly to client.
 Scalable: works well for large video/audio files, supports partial delivery.
 */
 export const getMediaCornerImage = (req, res, next) => {
-  const filename = req.query.media_file;
+  const filename = req.query.media_file || req.query.media;
   console.log('getMediaCornerImage......', filename);
 
   const currentWorkingDir = process.cwd();

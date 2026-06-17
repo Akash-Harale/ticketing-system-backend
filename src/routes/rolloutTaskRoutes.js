@@ -24,7 +24,12 @@ import {
   getTasksForOrg,
 } from "../controllers/rolloutTaskController.js";
 
+import { protect } from "../middleware/auth.middleware.js";
+
 const router = express.Router();
+
+// Apply protect middleware to all routes in this router
+router.use(protect);
 
 // Add a task
 router.post("/org/:orgn_id/tasks", validateRequest({ body: rolloutSchema.extract("tasks") }), addTaskToOrg);

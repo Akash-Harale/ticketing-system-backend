@@ -33,6 +33,11 @@ const memberSchema = new mongoose.Schema(
       ref: "Organization",
       required: true,
     },
+    designation: {
+      type: String,
+      default: "",
+      trim: true,
+    },
     active: {
       type: Boolean,
       default: true,

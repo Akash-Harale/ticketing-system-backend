@@ -69,18 +69,61 @@ const resolveOrganizations = async (states, districts) => {
 // Create rollout campaign and broadcast tasks
 export const createRollout = async (req, res, next) => {
   try {
-    const { title, states, districts } = req.body;
+    const { title, states, districts, tasks, start_date, end_date } = req.body;
 
-    // 1. Fetch all tasks from MasterTemplate
-    const masterTasks = await MasterTemplate.find();
-    if (!masterTasks || masterTasks.length === 0) {
-      throw new AppError(400, "No tasks found in MasterTemplate to broadcast. Please add tasks to MasterTemplate first.");
-    }
-
-    // 2. Resolve targeted Program Units
+    // 1. Resolve targeted Program Units
     const targetOrgs = await resolveOrganizations(states, districts);
     if (!targetOrgs || targetOrgs.length === 0) {
       throw new AppError(404, "No matching Program Units (Organizations of type PU) found for the selected states and districts.");
+    }
+
+    const campaignStart = start_date ? new Date(start_date) : null;
+    const campaignEnd = end_date ? new Date(end_date) : null;
+
+    if (campaignStart && campaignEnd && campaignEnd < campaignStart) {
+      throw new AppError(400, "Rollout end date cannot be less than start date.");
+    }
+
+    // 2. Map tasks to Rollout taskSchema format
+    let tasksToAssign = [];
+    if (tasks && tasks.length > 0) {
+      tasksToAssign = tasks.map(t => {
+        if (!t.task_id) {
+          throw new AppError(400, `Task ID is required for task "${t.task_name}".`);
+        }
+        if (!t.planned_start_date) {
+          throw new AppError(400, `Planned start date is required for task "${t.task_name}".`);
+        }
+        if (!t.planned_end_date) {
+          throw new AppError(400, `Planned end date is required for task "${t.task_name}".`);
+        }
+        const pStart = new Date(t.planned_start_date);
+        const pEnd = new Date(t.planned_end_date);
+        if (pEnd < pStart) {
+          throw new AppError(400, `Planned end date cannot be less than planned start date for task "${t.task_name}".`);
+        }
+
+        if (campaignStart && pStart < campaignStart) {
+          throw new AppError(400, `Planned start date for task "${t.task_name}" must be on or after the rollout start date.`);
+        }
+        if (campaignEnd && pEnd > campaignEnd) {
+          throw new AppError(400, `Planned end date for task "${t.task_name}" must be on or before the rollout end date.`);
+        }
+
+        return {
+          task_id: t.task_id,
+          task_name: t.task_name,
+          task_desc: t.task_desc || "",
+          task_priority: t.task_priority || t.priority || "Low",
+          task_dependency: t.task_dependency || "",
+          planned_start_date: pStart,
+          planned_end_date: pEnd,
+          task_status: "Open",
+          tracking_comments: ""
+        };
+      });
+    } else {
+      throw new AppError(400, "Planned tasks configuration with start and end dates is required to broadcast rollout.");
     }
 
     // 3. Create parent campaign record
@@ -89,23 +132,17 @@ export const createRollout = async (req, res, next) => {
       states,
       districts,
       status: "Active",
-      sentDate: new Date()
+      sentDate: new Date(),
+      start_date: start_date ? new Date(start_date) : undefined,
+      end_date: end_date ? new Date(end_date) : undefined
     });
 
-    // 4. Map MasterTemplate tasks to Rollout taskSchema format
-    const tasksToAssign = masterTasks.map(t => ({
-      task_name: t.task_name,
-      task_desc: t.task_desc || "",
-      task_priority: t.priority || "Low",
-      task_dependency: "",
-      task_status: "Open",
-      tracking_comments: ""
-    }));
-
-    // 5. Create rollout document for each targeted Organization
+    // 4. Create rollout document for each targeted Organization
     const rolloutsToCreate = targetOrgs.map(org => ({
       campaign_id: campaign._id,
       orgn_id: org._id,
+      start_date: start_date ? new Date(start_date) : undefined,
+      end_date: end_date ? new Date(end_date) : undefined,
       tasks: tasksToAssign
     }));
 
@@ -122,9 +159,25 @@ export const getRollouts = async (req, res, next) => {
   try {
     const { orgn_id, task_priority, task_status } = req.query;
 
-    if (orgn_id) {
+    const userRoleName = (req.user?.role_id?.name || "").toLowerCase();
+    const isCoordinator = userRoleName === "porgram_unit_coordinator" || 
+                          userRoleName === "program_unit_coordinator" ||
+                          userRoleName === "coordinator" || 
+                          userRoleName === "pc";
+
+    let targetOrgnId = orgn_id;
+    if (isCoordinator) {
+      const org = req.user?.member_id?.organization || req.user?.orgn_id;
+      const userOrgId = org?._id?.toString() || org?.toString();
+      if (!userOrgId) {
+        throw new AppError(403, "Access Denied: No organization is assigned to your coordinator account.");
+      }
+      targetOrgnId = userOrgId;
+    }
+
+    if (targetOrgnId) {
       // Coordinator view: get all rollouts for their organization
-      let filter = { orgn_id };
+      let filter = { orgn_id: targetOrgnId };
       let records = await Rollout.find(filter).populate("campaign_id");
 
       // Apply task-level filters
@@ -192,7 +245,11 @@ export const getRollouts = async (req, res, next) => {
         statesMap[stateId].districts[districtId].institutes.push({
           id: org._id.toString(),
           name: org.orgn_name,
-          type: org.orgn_type === "PU" ? "College" : "Institution"
+          type: org.orgn_type === "PU" ? "College" : "Institution",
+          rolloutId: r._id.toString(),
+          start_date: r.start_date,
+          end_date: r.end_date,
+          tasks: r.tasks
         });
       }
 
@@ -212,9 +269,12 @@ export const getRollouts = async (req, res, next) => {
           year: "numeric"
         }),
         status: campaign.status,
+        start_date: campaign.start_date,
+        end_date: campaign.end_date,
         totalStates: statesArray.length,
         totalInstitutes,
-        states: statesArray
+        states: statesArray,
+        tasks: rollouts[0]?.tasks || []
       });
     }
 
@@ -256,6 +316,196 @@ export const deleteRolloutByOrg = async (req, res, next) => {
     const record = await Rollout.findOneAndDelete({ orgn_id });
     if (!record) throw new AppError(404, "Rollout not found for organization");
     return sendResponse(res, 200, true, "Rollout deleted successfully", record, null, req);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Update rollout by ID
+export const updateRollout = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { start_date, end_date } = req.body;
+
+    if (start_date && end_date) {
+      if (new Date(end_date) < new Date(start_date)) {
+        throw new AppError(400, "Rollout end date cannot be less than start date.");
+      }
+    }
+
+    const record = await Rollout.findByIdAndUpdate(id, req.body, { new: true });
+    if (!record) throw new AppError(404, "Rollout not found");
+    return sendResponse(res, 200, true, "Rollout updated successfully", record, null, req);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Delete rollout by ID
+export const deleteRollout = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const record = await Rollout.findByIdAndDelete(id);
+    if (!record) throw new AppError(404, "Rollout not found");
+    return sendResponse(res, 200, true, "Rollout deleted successfully", record, null, req);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Add target states/districts to rollout campaign
+export const addCampaignTargets = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { states, districts } = req.body;
+
+    const campaign = await RolloutCampaign.findById(id);
+    if (!campaign) {
+      throw new AppError(404, "Rollout campaign not found");
+    }
+
+    // 1. Resolve organizations for states & districts
+    const resolvedOrgs = await resolveOrganizations(states, districts);
+    if (!resolvedOrgs || resolvedOrgs.length === 0) {
+      throw new AppError(400, "The selected states and districts do not contain any active Program Units. Please select a different scope.");
+    }
+
+    // 2. Find organizations that already have a Rollout for this campaign
+    const existingRollouts = await Rollout.find({ campaign_id: id });
+    const existingOrgIds = existingRollouts.map(r => r.orgn_id.toString());
+    const resolvedOrgIds = resolvedOrgs.map(o => o._id.toString());
+
+    // 3. Identify which ones to add (in resolved but not in existing)
+    const orgIdsToAdd = resolvedOrgIds.filter(oid => !existingOrgIds.includes(oid));
+    const orgsToAdd = resolvedOrgs.filter(org => orgIdsToAdd.includes(org._id.toString()));
+
+    // 4. Identify which ones to remove (in existing but not in resolved)
+    const orgIdsToRemove = existingOrgIds.filter(oid => !resolvedOrgIds.includes(oid));
+
+    // 5. Delete rollouts for removed organizations
+    if (orgIdsToRemove.length > 0) {
+      await Rollout.deleteMany({
+        campaign_id: id,
+        orgn_id: { $in: orgIdsToRemove }
+      });
+    }
+
+    // 6. Create Rollout documents for the new organizations
+    if (orgsToAdd.length > 0) {
+      let tasksToAssign = [];
+      if (existingRollouts.length > 0) {
+        tasksToAssign = existingRollouts[0].tasks.map(t => ({
+          task_name: t.task_name,
+          task_desc: t.task_desc,
+          task_priority: t.task_priority,
+          task_dependency: t.task_dependency || "",
+          planned_start_date: t.planned_start_date,
+          planned_end_date: t.planned_end_date,
+          task_status: "Open",
+          tracking_comments: ""
+        }));
+      } else {
+        const masterTasks = await MasterTemplate.find();
+        tasksToAssign = masterTasks.map(t => ({
+          task_name: t.task_name,
+          task_desc: t.task_desc || "",
+          task_priority: t.priority || "Low",
+          task_dependency: "",
+          task_status: "Open",
+          tracking_comments: ""
+        }));
+      }
+
+      const rolloutsToCreate = orgsToAdd.map(org => ({
+        campaign_id: id,
+        orgn_id: org._id,
+        tasks: tasksToAssign
+      }));
+      await Rollout.insertMany(rolloutsToCreate);
+    }
+
+    // 7. Update states and districts exactly
+    campaign.states = states;
+    campaign.districts = districts;
+    await campaign.save();
+
+    return sendResponse(res, 200, true, "Rollout campaign targets updated successfully", campaign, null, req);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Update rollout campaign and tasks globally
+export const updateRolloutCampaign = async (req, res, next) => {
+  try {
+    const { campaignId } = req.params;
+    const { title, start_date, end_date, tasks } = req.body;
+
+    const campaign = await RolloutCampaign.findById(campaignId);
+    if (!campaign) {
+      throw new AppError(404, "Rollout campaign not found");
+    }
+
+    const campaignStart = start_date ? new Date(start_date) : null;
+    const campaignEnd = end_date ? new Date(end_date) : null;
+
+    if (campaignStart && campaignEnd && campaignEnd < campaignStart) {
+      throw new AppError(400, "Rollout end date cannot be less than start date.");
+    }
+
+    // Validation: task planned dates must be within overall rollout dates
+    if (tasks && tasks.length > 0) {
+      for (const t of tasks) {
+        if (!t.task_id) {
+          throw new AppError(400, `Task ID is required for task "${t.task_name}".`);
+        }
+        const pStart = t.planned_start_date ? new Date(t.planned_start_date) : null;
+        const pEnd = t.planned_end_date ? new Date(t.planned_end_date) : null;
+
+        if (pStart && pEnd && pEnd < pStart) {
+          throw new AppError(400, `Planned end date cannot be less than planned start date for task "${t.task_name}".`);
+        }
+
+        if (campaignStart) {
+          if (!pStart || pStart < campaignStart) {
+            throw new AppError(400, `Planned start date for task "${t.task_name}" must be on or after the rollout start date.`);
+          }
+        }
+        if (campaignEnd) {
+          if (!pEnd || pEnd > campaignEnd) {
+            throw new AppError(400, `Planned end date for task "${t.task_name}" must be on or before the rollout end date.`);
+          }
+        }
+      }
+    }
+
+    if (title !== undefined) campaign.title = title;
+    if (start_date !== undefined) campaign.start_date = campaignStart;
+    if (end_date !== undefined) campaign.end_date = campaignEnd;
+    await campaign.save();
+
+    // Propagate changes to all Rollout documents in this campaign
+    const rollouts = await Rollout.find({ campaign_id: campaignId });
+    for (const r of rollouts) {
+      r.start_date = campaignStart;
+      r.end_date = campaignEnd;
+
+      if (tasks && tasks.length > 0) {
+        r.tasks = r.tasks.map(origTask => {
+          const updated = tasks.find(ut => ut.task_id === origTask.task_id);
+          if (updated) {
+            origTask.task_priority = updated.task_priority || origTask.task_priority;
+            origTask.task_desc = updated.task_desc !== undefined ? updated.task_desc : origTask.task_desc;
+            origTask.planned_start_date = updated.planned_start_date ? new Date(updated.planned_start_date) : origTask.planned_start_date;
+            origTask.planned_end_date = updated.planned_end_date ? new Date(updated.planned_end_date) : origTask.planned_end_date;
+          }
+          return origTask;
+        });
+      }
+      await r.save();
+    }
+
+    return sendResponse(res, 200, true, "Rollout campaign and its tasks updated successfully", campaign, null, req);
   } catch (err) {
     next(err);
   }

@@ -26,7 +26,7 @@
 import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
-  task_id: { type: mongoose.Schema.Types.ObjectId, auto: true },
+  task_id: { type: String, required: true },
   task_name: { type: String, required: true },
   task_desc: { type: String, default: "" },
   task_priority: { type: String, enum: ["Low", "Medium", "High"], default: "Low" },
@@ -37,7 +37,7 @@ const taskSchema = new mongoose.Schema({
   actual_end_date: { type: Date },
   task_status: {
     type: String,
-    enum: ["Open", "Pending", "In-progress", "Complete", "Closed"],
+    enum: ["Open", "Pending", "In-progress", "Complete", "Closed", "Reopened"],
     default: "Open"
   },
   tracking_comments: { type: String, default: "" }
@@ -46,6 +46,8 @@ const taskSchema = new mongoose.Schema({
 const rolloutSchema = new mongoose.Schema({
   campaign_id: { type: mongoose.Schema.Types.ObjectId, ref: "RolloutCampaign", required: true },
   orgn_id: { type: mongoose.Schema.Types.ObjectId, ref: "Organization", required: true },
+  start_date: { type: Date },
+  end_date: { type: Date },
   tasks: [taskSchema]
 }, { timestamps: true });
 

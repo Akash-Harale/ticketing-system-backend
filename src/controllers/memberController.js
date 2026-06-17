@@ -15,11 +15,11 @@ export const createMember = async (req, res, next) => {
   session.startTransaction();
 
   try {
-    const { name, email, mobile, role_id, organization } = req.body; // derive from body
+    const { name, email, mobile, role_id, organization, designation } = req.body; // derive from body
 
     // Step 1: Create Member
     const member = await Member.create(
-      [{ name, email, mobile, role_id, organization }],
+      [{ name, email, mobile, role_id, organization, designation }],
       { session }
     );
 
@@ -106,6 +106,9 @@ export const getMemberById = async (req, res, next) => {
 // Update Member
 // ───────────────────────────────────────────────
 export const updateMember = async (req, res, next) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     const { id } = req.params; // derive from params
     const body = req.body;     // derive from body
@@ -113,6 +116,7 @@ export const updateMember = async (req, res, next) => {
     const member = await Member.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true,
+      session
     })
       .populate("role_id")
       .populate({
@@ -124,8 +128,24 @@ export const updateMember = async (req, res, next) => {
       });
 
     if (!member) throw new AppError(404, "Member not found");
+
+    // Sync changes to User document
+    const userUpdate = {};
+    if (body.email) userUpdate.email = body.email;
+    if (body.role_id) userUpdate.role_id = body.role_id;
+    if (body.organization) userUpdate.orgn_id = body.organization;
+
+    if (Object.keys(userUpdate).length > 0) {
+      await User.findOneAndUpdate({ member_id: id }, userUpdate, { session });
+    }
+
+    await session.commitTransaction();
+    session.endSession();
+
     return sendResponse(res, 200, true, "Member updated successfully", member, null, req);
   } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
     next(err);
   }
 };

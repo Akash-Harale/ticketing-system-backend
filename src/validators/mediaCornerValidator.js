@@ -66,8 +66,14 @@ export const querySchema = Joi.object({
 export const assetQuerySchema = Joi.object({
   media_file: Joi.string()
     .pattern(/\.(jpg|jpeg|png|gif|mp4|mp3|pdf)$/i)
-    .required()
+    .optional()
     .messages({
       "string.pattern.base": "Asset media_file must be a valid file type (jpg, jpeg, png, gif, mp4, mp3, pdf)",
     }),
-});
+  media: Joi.string()
+    .pattern(/\.(jpg|jpeg|png|gif|mp4|mp3|pdf)$/i)
+    .optional()
+    .messages({
+      "string.pattern.base": "Asset media must be a valid file type (jpg, jpeg, png, gif, mp4, mp3, pdf)",
+    }),
+}).or("media_file", "media");

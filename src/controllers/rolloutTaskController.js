@@ -82,7 +82,16 @@ export const updateTaskForOrg = async (req, res, next) => {
     const { orgn_id, task_id } = req.params;
     const body = req.body;
 
-    checkCoordinatorOrg(req, orgn_id);
+    const userRoleName = (req.user?.role_id?.name || "").toLowerCase();
+    const isSuperadmin = userRoleName === "superadmin";
+    const isCoordinator = userRoleName === "porgram_unit_coordinator" || 
+                          userRoleName === "program_unit_coordinator" ||
+                          userRoleName === "coordinator" || 
+                          userRoleName === "pc";
+
+    if (!isSuperadmin) {
+      checkCoordinatorOrg(req, orgn_id);
+    }
 
     // Find the correct rollout that has this task
     const rollout = await Rollout.findOne({ orgn_id, "tasks.task_id": task_id });
@@ -92,16 +101,16 @@ export const updateTaskForOrg = async (req, res, next) => {
     const task = rollout.tasks.find(t => t.task_id && t.task_id.toString() === task_id);
     if (!task) throw new AppError(404, "Task not found");
 
-    // Prevent coordinators from updating already completed or closed tasks
     const currentStatus = task.task_status;
-    const userRoleName = (req.user?.role_id?.name || "").toLowerCase();
-    const isCoordinator = userRoleName === "porgram_unit_coordinator" || 
-                          userRoleName === "program_unit_coordinator" ||
-                          userRoleName === "coordinator" || 
-                          userRoleName === "pc";
 
-    if (isCoordinator && (currentStatus === "Complete" || currentStatus === "Closed")) {
-      throw new AppError(400, "This task is already completed/closed and cannot be modified.");
+    // Rule: PC cannot change task if status is Closed
+    if (isCoordinator && currentStatus === "Closed") {
+      throw new AppError(403, "This task is closed and cannot be modified by a coordinator.");
+    }
+
+    // Rule: PC cannot change status to Closed or Reopened
+    if (isCoordinator && (body.task_status === "Closed" || body.task_status === "Reopened")) {
+      throw new AppError(403, "Coordinators are not authorized to close or reopen tasks.");
     }
 
     // Map optional remarks/tracking_comments from client
@@ -109,43 +118,37 @@ export const updateTaskForOrg = async (req, res, next) => {
       body.tracking_comments = body.remarks;
     }
 
-    // Required planned dates validations
-    const plannedStart = body.planned_start_date || task.planned_start_date;
-    const plannedEnd = body.planned_end_date || task.planned_end_date;
+    // Validations for planned dates if provided
+    const plannedStart = body.planned_start_date !== undefined ? body.planned_start_date : task.planned_start_date;
+    const plannedEnd = body.planned_end_date !== undefined ? body.planned_end_date : task.planned_end_date;
 
-    if (!plannedStart) {
-      throw new AppError(400, "Planned start date is required.");
+    let pStart, pEnd;
+    if (plannedStart) {
+      pStart = new Date(plannedStart);
     }
-    if (!plannedEnd) {
-      throw new AppError(400, "Planned end date is required.");
+    if (plannedEnd) {
+      pEnd = new Date(plannedEnd);
     }
 
-    const pStart = new Date(plannedStart);
-    const pEnd = new Date(plannedEnd);
-
-    if (pEnd < pStart) {
+    if (pStart && pEnd && pEnd < pStart) {
       throw new AppError(400, "Planned end date cannot be less than planned start date.");
     }
 
-    // Required actual dates validations
-    const actualStart = body.actual_start_date;
-    const actualEnd = body.actual_end_date;
+    // Validations for actual dates if provided
+    const actualStart = body.actual_start_date !== undefined ? body.actual_start_date : task.actual_start_date;
+    const actualEnd = body.actual_end_date !== undefined ? body.actual_end_date : task.actual_end_date;
 
-    if (!actualStart) {
-      throw new AppError(400, "Actual start date is required.");
-    }
-    if (!actualEnd) {
-      throw new AppError(400, "Actual end date is required.");
-    }
-
-    const aStart = new Date(actualStart);
-    const aEnd = new Date(actualEnd);
-
-    if (aStart < pStart) {
-      throw new AppError(400, "Actual start date cannot be less than planned start date.");
-    }
-    if (aEnd < aStart) {
-      throw new AppError(400, "Actual end date cannot be less than actual start date.");
+    if (actualStart) {
+      const aStart = new Date(actualStart);
+      if (pStart && aStart < pStart) {
+        throw new AppError(400, "Actual start date cannot be less than planned start date.");
+      }
+      if (actualEnd) {
+        const aEnd = new Date(actualEnd);
+        if (aEnd < aStart) {
+          throw new AppError(400, "Actual end date cannot be less than actual start date.");
+        }
+      }
     }
 
     // Assign validated properties

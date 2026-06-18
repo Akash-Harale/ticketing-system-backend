@@ -245,8 +245,10 @@ export const deleteMediaCornerImage = async (req, res, next) => {
 // src/controllers/mediaCornerController.js
 import fs from "fs";
 import path from "path";
+import jwt from "jsonwebtoken";
 import { logger } from "../utils/logger.js";
 import { MediaCorner } from "../models/mediaCornerModel.js";
+import { User } from "../models/userModel.js";
 import { AppError } from "../utils/AppError.js";
 import { sendResponse } from "../utils/sendResponse.js";
 
@@ -265,7 +267,11 @@ const deleteFile = async (relativePath, requestId = "N/A") => {
 export const createMediaCorner = async (req, res, next) => {
   const requestId = req.requestId || "N/A";
   try {
-    if (req.user_type === "user") throw new AppError(403, "Action forbidden for user role");
+    const isSuperadmin = req.user?.role_id?.name?.toLowerCase() === "superadmin";
+    const isAdmin = req.user?.role_id?.name?.toLowerCase()?.endsWith("_admin") || req.user?.role_id?.name?.toLowerCase()?.includes("admin");
+    if (!isSuperadmin && !isAdmin) {
+      throw new AppError(403, "Action forbidden: Only admin or superadmin can perform this action");
+    }
 
     const mediacorner = await MediaCorner.create(req.body);
     logger.info(`[${requestId}] Media Corner created: ${mediacorner._id}`);
@@ -281,8 +287,44 @@ export const getMediaCorner = async (req, res, next) => {
   try {
     const filter = {};
     if (req.query.media_type) filter.media_type = req.query.media_type;
+
+    if (req.query.media_type === "notification") {
+      let user = null;
+      let token = null;
+      if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        token = req.headers.authorization.split(" ")[1];
+      }
+      if (token) {
+        try {
+          const decoded = jwt.verify(token, process.env.JWT_SECRET);
+          user = await User.findById(decoded.id).populate("role_id").populate("member_id");
+        } catch (err) {
+          console.warn("Optional token verification failed in getMediaCorner:", err.message);
+        }
+      }
+
+      const isSuperadmin = user?.role_id?.name?.toLowerCase() === "superadmin";
+      const isAdmin = user?.role_id?.name?.toLowerCase()?.endsWith("_admin") || user?.role_id?.name?.toLowerCase()?.includes("admin");
+
+      if (!isSuperadmin && !isAdmin) {
+        const memberId = user?.member_id?._id || user?.member_id;
+        filter.$or = [
+          { notification_type: "broadcast" },
+          { notification_type: "one-to-one", recipient_id: user?._id },
+        ];
+        if (memberId) {
+          filter.$or.push({ notification_type: "one-to-one", recipient_id: memberId });
+        }
+      }
+    }
+
     const records = await MediaCorner.find(filter);
-    if (!records.length) throw new AppError(404, "No Media Corner data found");
+    if (!records.length) {
+      if (req.query.media_type === "notification") {
+        return sendResponse(res, 200, true, "No notifications found", [], null, req);
+      }
+      throw new AppError(404, "No Media Corner data found");
+    }
 
     const hostUrl = `${process.env.HOST_URL}:${process.env.PORT}`;
     console.log(hostUrl,'--------------hostUrl')
@@ -315,13 +357,6 @@ export const getMediaCornerById = async (req, res, next) => {
 };
 
 // Stream image/video
-// 21/11/2025 
-/*
-fs.createReadStream: streams file in chunks, avoids loading entire file into memory.
-Error handling: listen for stream.on('error') to catch read errors.
-Response piping: stream.pipe(res) sends data directly to client.
-Scalable: works well for large video/audio files, supports partial delivery.
-*/
 export const getMediaCornerImage = (req, res, next) => {
   const filename = req.query.media_file || req.query.media;
   console.log('getMediaCornerImage......', filename);
@@ -362,10 +397,14 @@ export const updateMediaCorner = async (req, res, next) => {
     const { id } = req.params;
     const requestId = req.requestId || "N/A";
 
+    const isSuperadmin = req.user?.role_id?.name?.toLowerCase() === "superadmin";
+    const isAdmin = req.user?.role_id?.name?.toLowerCase()?.endsWith("_admin") || req.user?.role_id?.name?.toLowerCase()?.includes("admin");
+    if (!isSuperadmin && !isAdmin) {
+      throw new AppError(403, "Action forbidden: Only admin or superadmin can perform this action");
+    }
+
     const existingData = await MediaCorner.findById(id);
     if (!existingData) throw new AppError(404, "Media not found");
-
-    if (req.user_type === "user") throw new AppError(403, "Action forbidden for user role");
 
     const updatePayload = { ...req.body };
     if (req.file) {
@@ -397,12 +436,43 @@ export const deleteMediaCornerImage = async (req, res, next) => {
   const requestId = req.requestId || "N/A";
 
   try {
+    const isSuperadmin = req.user?.role_id?.name?.toLowerCase() === "superadmin";
+    const isAdmin = req.user?.role_id?.name?.toLowerCase()?.endsWith("_admin") || req.user?.role_id?.name?.toLowerCase()?.includes("admin");
+    if (!isSuperadmin && !isAdmin) {
+      throw new AppError(403, "Action forbidden: Only admin or superadmin can perform this action");
+    }
+
     const profile = await MediaCorner.findByIdAndDelete(id);
     if (!profile) throw new AppError(404, "Media Corner not found");
 
     if (profile.media_file) await deleteFile(profile.media_file, requestId);
 
     return sendResponse(res, 200, true, "Media Corner deleted successfully", null, null, req);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Mark a notification as read
+export const markNotificationRead = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const record = await MediaCorner.findById(id);
+    if (!record) throw new AppError(404, "Notification not found");
+
+    const isRecipient =
+      record.recipient_id?.toString() === req.user?._id?.toString() ||
+      record.recipient_id?.toString() === req.user?.member_id?.toString() ||
+      record.recipient_id?.toString() === req.user?.member_id?._id?.toString();
+
+    if (!isRecipient) {
+      throw new AppError(403, "You are not authorized to mark this notification as read");
+    }
+
+    record.is_read = true;
+    await record.save();
+
+    return sendResponse(res, 200, true, "Notification marked as read successfully", record, null, req);
   } catch (err) {
     next(err);
   }

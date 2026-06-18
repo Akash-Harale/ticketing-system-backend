@@ -25,13 +25,27 @@ const mediaCornerSchema = new mongoose.Schema(
     media_type: {
       type: String,
       required: [true, "Media type is required"],
-      enum: ["image", "video", "audio", "document", "faq", "template", "pdf"],
+      enum: ["image", "video", "audio", "document", "faq", "template", "pdf", "notification"],
       index: true,
     },
     media_file: {
       type: String,
       trim: true,
       default: "",
+    },
+    notification_type: {
+      type: String,
+      enum: ["broadcast", "one-to-one"],
+      default: "broadcast",
+    },
+    recipient_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    is_read: {
+      type: Boolean,
+      default: false,
     },
     media_timestamp: {
       type: Date,

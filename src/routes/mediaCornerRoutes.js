@@ -93,8 +93,11 @@ import {
   getMediaCornerImage,
   updateMediaCorner,
   deleteMediaCornerImage,
+  markNotificationRead,
 } from "../controllers/mediaCornerController.js";
 import { createUploader } from "../config/multerv2.js";
+
+import { protect } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -112,6 +115,7 @@ const injectFileName = (req, res, next) => {
 // Create Media Corner
 router.post(
   "/",
+  protect,
   upload.single("media_file"),
   injectFileName,
   validateRequest({ body: mediaCornerSchema }),
@@ -121,6 +125,7 @@ router.post(
 // Update Media Corner
 router.put(
   "/:id",
+  protect,
   upload.single("media_file"),
   injectFileName,
   validateRequest({ params: idSchema, body: mediaCornerSchema }),
@@ -137,7 +142,10 @@ router.get("/asset", validateRequest({ query: assetQuerySchema }), getMediaCorne
 router.get("/:id", validateRequest({ params: idSchema }), getMediaCornerById);
 
 // Delete Media Corner
-router.delete("/:id", validateRequest({ params: idSchema }), deleteMediaCornerImage);
+router.delete("/:id", protect, validateRequest({ params: idSchema }), deleteMediaCornerImage);
+
+// Mark notification as read
+router.patch("/:id/read", protect, validateRequest({ params: idSchema }), markNotificationRead);
 
 //export default router;
 export const mediaCornerRoutes = router;

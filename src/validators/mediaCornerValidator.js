@@ -32,10 +32,10 @@ export const mediaCornerSchema = Joi.object({
     }),
 
   media_type: Joi.string()
-    .valid("image", "video", "audio", "document", "faq", "template", "pdf")
+    .valid("image", "video", "audio", "document", "faq", "template", "pdf", "notification")
     .required()
     .messages({
-      "any.only": "Media type must be one of image, video, audio, document, faq, or template",
+      "any.only": "Media type must be one of image, video, audio, document, faq, template, pdf, or notification",
     }),
 
   media_file: Joi.string()
@@ -45,6 +45,19 @@ export const mediaCornerSchema = Joi.object({
     .messages({
       "string.pattern.base": "Media file must be a valid file type (jpg, jpeg, png, gif, mp4, mp3, pdf)",
     }),
+
+  notification_type: Joi.string()
+    .valid("broadcast", "one-to-one")
+    .optional(),
+
+  recipient_id: Joi.string()
+    .hex()
+    .length(24)
+    .allow("", null)
+    .optional(),
+
+  is_read: Joi.boolean()
+    .optional(),
 });
 
 export const idSchema = Joi.object({
@@ -56,10 +69,10 @@ export const idSchema = Joi.object({
 
 export const querySchema = Joi.object({
   media_type: Joi.string()
-    .valid("image", "video", "audio", "document", "faq", "template")
+    .valid("image", "video", "audio", "document", "faq", "template", "notification")
     .optional()
     .messages({
-      "any.only": "Query media_type must be one of image, video, audio, document, faq, or template",
+      "any.only": "Query media_type must be one of image, video, audio, document, faq, template, or notification",
     }),
 });
 

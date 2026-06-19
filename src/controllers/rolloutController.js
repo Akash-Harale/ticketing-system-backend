@@ -106,6 +106,39 @@ const notifyCoordinators = async (targetOrgs, campaignTitle) => {
   }
 };
 
+// Helper to notify a coordinator of an organization when a campaign updates
+const notifyCoordinatorsOfUpdate = async (orgId, subject, description) => {
+  try {
+    // Find all coordinator roles
+    const pcRoles = await Role.find({
+      name: { $in: ["Porgram_unit_coordinator", "program_unit_coordinator", "Coordinator", "PC"] }
+    });
+    const pcRoleIds = pcRoles.map(r => r._id);
+
+    // Find all coordinator users for this specific organization
+    const coordinators = await User.find({
+      orgn_id: orgId,
+      role_id: { $in: pcRoleIds }
+    });
+
+    if (coordinators.length === 0) return;
+
+    // For each coordinator, create a one-to-one notification
+    const notificationsToCreate = coordinators.map(coord => ({
+      media_header: subject,
+      media_narration: description,
+      media_type: "notification",
+      notification_type: "one-to-one",
+      recipient_id: coord.member_id || coord._id,
+      is_read: false
+    }));
+
+    await MediaCorner.insertMany(notificationsToCreate);
+  } catch (error) {
+    console.error("Error creating campaign update notifications for coordinators:", error);
+  }
+};
+
 // Create rollout campaign and broadcast tasks
 export const createRollout = async (req, res, next) => {
   try {
@@ -549,6 +582,11 @@ export const updateRolloutCampaign = async (req, res, next) => {
         });
       }
       await r.save();
+
+      // Notify the coordinator of this organization
+      const subject = `Rollout Campaign "${campaign.title}" updated by Admin`;
+      const description = `The rollout campaign "${campaign.title}" scheduled dates or tasks have been modified by the administrator. Please review your dashboard.`;
+      await notifyCoordinatorsOfUpdate(r.orgn_id, subject, description);
     }
 
     return sendResponse(res, 200, true, "Rollout campaign and its tasks updated successfully", campaign, null, req);

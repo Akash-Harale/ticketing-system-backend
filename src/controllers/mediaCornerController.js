@@ -289,28 +289,21 @@ export const getMediaCorner = async (req, res, next) => {
     
     let records = await MediaCorner.find(filter);
 
-    // Filter notifications for non-admin users
-    const roleName = (req.user?.role_id?.name || "").toLowerCase();
-    const isSuperadmin = roleName === "superadmin";
-    const isAdmin = roleName.endsWith("_admin") || roleName.includes("admin");
-    const canManage = isSuperadmin || isAdmin;
+    // Filter one-to-one notifications so users only see their own
+    const memberIdStr = req.user?.member_id?._id?.toString() || req.user?.member_id?.toString();
+    const userIdStr = req.user?._id?.toString();
 
-    if (!canManage) {
-      const memberIdStr = req.user?.member_id?._id?.toString() || req.user?.member_id?.toString();
-      const userIdStr = req.user?._id?.toString();
-
-      records = records.filter(record => {
-        if (record.media_type === "notification") {
-          if (record.notification_type === "broadcast") return true;
-          if (record.notification_type === "one-to-one") {
-            const recipIdStr = record.recipient_id?.toString();
-            return recipIdStr === userIdStr || recipIdStr === memberIdStr;
-          }
-          return false;
+    records = records.filter(record => {
+      if (record.media_type === "notification") {
+        if (record.notification_type === "broadcast") return true;
+        if (record.notification_type === "one-to-one") {
+          const recipIdStr = record.recipient_id?.toString();
+          return recipIdStr === userIdStr || recipIdStr === memberIdStr;
         }
-        return true;
-      });
-    }
+        return false;
+      }
+      return true;
+    });
 
     if (!records.length) throw new AppError(404, "No Media Corner data found");
 

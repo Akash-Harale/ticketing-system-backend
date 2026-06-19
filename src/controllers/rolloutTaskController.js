@@ -1,7 +1,45 @@
 // src/controllers/rolloutTaskController.js
 import { Rollout } from "../models/rollout.js";
+import { User } from "../models/userModel.js";
+import { Role } from "../models/Role.js";
+import { MediaCorner } from "../models/mediaCornerModel.js";
 import { AppError } from "../utils/AppError.js";
 import { sendResponse } from "../utils/sendResponse.js";
+
+// Helper to notify a specific organization's coordinator
+const notifyCoordinatorOfOrg = async (orgn_id, subject, description) => {
+  try {
+    // Find all coordinator roles
+    const pcRoles = await Role.find({
+      name: { $in: ["Porgram_unit_coordinator", "program_unit_coordinator", "Coordinator", "PC"] }
+    });
+    const pcRoleIds = pcRoles.map(r => r._id);
+
+    // Find all coordinator users for this specific organization
+    const coordinators = await User.find({
+      orgn_id: orgn_id,
+      role_id: { $in: pcRoleIds }
+    });
+
+    if (coordinators.length === 0) {
+      return;
+    }
+
+    // For each coordinator, create a one-to-one notification
+    const notificationsToCreate = coordinators.map(coord => ({
+      media_header: subject,
+      media_narration: description,
+      media_type: "notification",
+      notification_type: "one-to-one",
+      recipient_id: coord.member_id || coord._id,
+      is_read: false
+    }));
+
+    await MediaCorner.insertMany(notificationsToCreate);
+  } catch (error) {
+    console.error("Error creating task update notification for coordinator:", error);
+  }
+};
 
 // Helper to check if coordinator has access to this organization's data
 const checkCoordinatorOrg = (req, orgn_id) => {
@@ -118,42 +156,78 @@ export const updateTaskForOrg = async (req, res, next) => {
       body.tracking_comments = body.remarks;
     }
 
-    // Validations for planned dates if provided
-    const plannedStart = body.planned_start_date !== undefined ? body.planned_start_date : task.planned_start_date;
-    const plannedEnd = body.planned_end_date !== undefined ? body.planned_end_date : task.planned_end_date;
+    // Normalize date inputs (empty strings to null)
+    if (body.planned_start_date === "") body.planned_start_date = null;
+    if (body.planned_end_date === "") body.planned_end_date = null;
+    if (body.actual_start_date === "") body.actual_start_date = null;
+    if (body.actual_end_date === "") body.actual_end_date = null;
 
-    let pStart, pEnd;
-    if (plannedStart) {
-      pStart = new Date(plannedStart);
-    }
-    if (plannedEnd) {
-      pEnd = new Date(plannedEnd);
-    }
-
-    if (pStart && pEnd && pEnd < pStart) {
-      throw new AppError(400, "Planned end date cannot be less than planned start date.");
-    }
-
-    // Validations for actual dates if provided
-    const actualStart = body.actual_start_date !== undefined ? body.actual_start_date : task.actual_start_date;
-    const actualEnd = body.actual_end_date !== undefined ? body.actual_end_date : task.actual_end_date;
-
-    if (actualStart) {
-      const aStart = new Date(actualStart);
-      if (pStart && aStart < pStart) {
-        throw new AppError(400, "Actual start date cannot be less than planned start date.");
+    // Helper to compare values including dates and other values
+    const isValueChanged = (newValue, oldValue) => {
+      if (newValue === undefined) return false;
+      if (newValue instanceof Date || oldValue instanceof Date || (typeof newValue === "string" && !isNaN(Date.parse(newValue)) && newValue.includes("-"))) {
+        const t1 = newValue ? new Date(newValue).getTime() : null;
+        const t2 = oldValue ? new Date(oldValue).getTime() : null;
+        return t1 !== t2;
       }
-      if (actualEnd) {
-        const aEnd = new Date(actualEnd);
-        if (aEnd < aStart) {
-          throw new AppError(400, "Actual end date cannot be less than actual start date.");
-        }
-      }
-    }
+      return newValue !== oldValue;
+    };
+
+    const hasStatusChanged = body.task_status !== undefined && body.task_status !== task.task_status;
+    const hasNameChanged = isValueChanged(body.task_name, task.task_name);
+    const hasDescChanged = isValueChanged(body.task_desc, task.task_desc);
+    const hasPriorityChanged = isValueChanged(body.task_priority, task.task_priority);
+    const hasDependencyChanged = isValueChanged(body.task_dependency, task.task_dependency);
+    const hasCommentsChanged = isValueChanged(body.tracking_comments, task.tracking_comments) || isValueChanged(body.remarks, task.tracking_comments);
+    
+    const hasDateChanged =
+      isValueChanged(body.planned_start_date, task.planned_start_date) ||
+      isValueChanged(body.planned_end_date, task.planned_end_date) ||
+      isValueChanged(body.actual_start_date, task.actual_start_date) ||
+      isValueChanged(body.actual_end_date, task.actual_end_date);
+
+    const hasAnyChanged = hasStatusChanged || hasDateChanged || hasNameChanged || hasDescChanged || hasPriorityChanged || hasDependencyChanged || hasCommentsChanged;
 
     // Assign validated properties
     Object.assign(task, body);
+    rollout.markModified("tasks");
     await rollout.save();
+
+    // Check if updated by admin and status or date has changed
+    const isAdmin = userRoleName === "superadmin" || 
+                    userRoleName.endsWith("_admin") || 
+                    userRoleName.includes("admin") ||
+                    userRoleName === "nss-admin" || 
+                    userRoleName === "pmu-admin";
+
+    if (isAdmin && hasAnyChanged) {
+      let subject = `Task "${task.task_name}" updated by Admin`;
+      let details = [];
+
+      if (hasStatusChanged) {
+        subject = `Task "${task.task_name}" status updated to ${body.task_status}`;
+        details.push(`Status changed from "${currentStatus}" to "${body.task_status}".`);
+      }
+
+      if (hasDateChanged) {
+        if (!hasStatusChanged) {
+          subject = `Task "${task.task_name}" schedule updated`;
+        }
+        details.push("Task scheduled/actual dates have been modified by the administrator.");
+      }
+
+      if (hasNameChanged || hasDescChanged || hasPriorityChanged || hasDependencyChanged || hasCommentsChanged) {
+        if (!hasStatusChanged && !hasDateChanged) {
+          subject = `Task "${task.task_name}" details updated`;
+        }
+        details.push("Task description, priority, comments or other details have been updated.");
+      }
+
+      const description = `The task "${task.task_name}" in your rollout has been updated. ${details.join(" ")}`;
+
+      // Send notification to the coordinators of this organization (orgn_id)
+      await notifyCoordinatorOfOrg(orgn_id, subject, description);
+    }
 
     return sendResponse(res, 200, true, "Task updated successfully", task, null, req);
   } catch (err) {

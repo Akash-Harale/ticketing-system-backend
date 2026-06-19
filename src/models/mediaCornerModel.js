@@ -1,5 +1,6 @@
 // src/models/mediaCornerModel.js
 import mongoose from "mongoose";
+import { MEDIA_CORNER_TYPE_VALUES } from "../config/mediaCornerTypes.js";
 
 const mediaCornerSchema = new mongoose.Schema(
   {
@@ -25,7 +26,7 @@ const mediaCornerSchema = new mongoose.Schema(
     media_type: {
       type: String,
       required: [true, "Media type is required"],
-      enum: ["image", "video", "audio", "document", "faq", "template", "pdf"],
+      enum: [...MEDIA_CORNER_TYPE_VALUES, "notification"],
       index: true,
     },
     media_file: {
@@ -37,6 +38,20 @@ const mediaCornerSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
       index: true,
+    },
+    notification_type: {
+      type: String,
+      enum: ["broadcast", "one-to-one"],
+      default: "broadcast",
+    },
+    recipient_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Member",
+      default: null,
+    },
+    is_read: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

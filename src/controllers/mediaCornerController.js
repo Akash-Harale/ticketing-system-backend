@@ -247,8 +247,16 @@ import fs from "fs";
 import path from "path";
 import { logger } from "../utils/logger.js";
 import { MediaCorner } from "../models/mediaCornerModel.js";
+import { User } from "../models/userModel.js";
+import { MEDIA_CORNER_TYPES } from "../config/mediaCornerTypes.js";
 import { AppError } from "../utils/AppError.js";
 import { sendResponse } from "../utils/sendResponse.js";
+
+// Get all available Knowledge Base media types (public — no auth needed)
+export const getMediaTypes = (req, res) => {
+  // We expose only KB types (exclude internal "notification" type)
+  return sendResponse(res, 200, true, "Media types retrieved successfully", MEDIA_CORNER_TYPES, null, req);
+};
 
 // Helper: delete file safely
 const deleteFile = async (relativePath, requestId = "N/A") => {
@@ -265,10 +273,41 @@ const deleteFile = async (relativePath, requestId = "N/A") => {
 export const createMediaCorner = async (req, res, next) => {
   const requestId = req.requestId || "N/A";
   try {
-    if (req.user_type === "user") throw new AppError(403, "Action forbidden for user role");
+    const roleName = (req.user?.role_id?.name || "").toLowerCase();
+    const isSuperadmin = roleName === "superadmin";
+    const isAdmin = roleName.endsWith("_admin") || roleName.includes("admin");
+    const canManage = isSuperadmin || isAdmin;
+
+    if (!canManage) throw new AppError(403, "Action forbidden for user role");
 
     const mediacorner = await MediaCorner.create(req.body);
     logger.info(`[${requestId}] Media Corner created: ${mediacorner._id}`);
+
+    // If this is a Knowledge Base post (not a notification), send a broadcast notification to all users
+    const isKnowledgeBasePost = req.body.media_type && req.body.media_type !== "notification";
+    if (isKnowledgeBasePost) {
+      try {
+        const typeLabel = req.body.media_type.charAt(0).toUpperCase() + req.body.media_type.slice(1);
+        const allUsers = await User.find({}, "_id member_id");
+
+        const broadcastNotifications = allUsers.map(u => ({
+          media_header: `New ${typeLabel} added to Knowledge Base`,
+          media_narration: `A new ${typeLabel.toLowerCase()} titled "${mediacorner.media_header}" has been added to the Knowledge Base. Check it out now.`,
+          media_type: "notification",
+          notification_type: "one-to-one",
+          recipient_id: u.member_id || u._id,
+          is_read: false
+        }));
+
+        if (broadcastNotifications.length > 0) {
+          await MediaCorner.insertMany(broadcastNotifications);
+          logger.info(`[${requestId}] Knowledge Base broadcast sent to ${broadcastNotifications.length} users`);
+        }
+      } catch (notifyErr) {
+        logger.warn(`[${requestId}] Failed to send Knowledge Base broadcast notification: ${notifyErr.message}`);
+      }
+    }
+
     return sendResponse(res, 201, true, "Media Corner created successfully", mediacorner, null, req);
   } catch (err) {
     if (req.body.media_file) await deleteFile(req.body.media_file, requestId);
@@ -281,7 +320,25 @@ export const getMediaCorner = async (req, res, next) => {
   try {
     const filter = {};
     if (req.query.media_type) filter.media_type = req.query.media_type;
-    const records = await MediaCorner.find(filter);
+    
+    let records = await MediaCorner.find(filter);
+
+    // Filter one-to-one notifications so users only see their own
+    const memberIdStr = req.user?.member_id?._id?.toString() || req.user?.member_id?.toString();
+    const userIdStr = req.user?._id?.toString();
+
+    records = records.filter(record => {
+      if (record.media_type === "notification") {
+        if (record.notification_type === "broadcast") return true;
+        if (record.notification_type === "one-to-one") {
+          const recipIdStr = record.recipient_id?.toString();
+          return recipIdStr === userIdStr || recipIdStr === memberIdStr;
+        }
+        return false;
+      }
+      return true;
+    });
+
     if (!records.length) throw new AppError(404, "No Media Corner data found");
 
     const hostUrl = `${process.env.HOST_URL}:${process.env.PORT}`;
@@ -365,7 +422,12 @@ export const updateMediaCorner = async (req, res, next) => {
     const existingData = await MediaCorner.findById(id);
     if (!existingData) throw new AppError(404, "Media not found");
 
-    if (req.user_type === "user") throw new AppError(403, "Action forbidden for user role");
+    const roleName = (req.user?.role_id?.name || "").toLowerCase();
+    const isSuperadmin = roleName === "superadmin";
+    const isAdmin = roleName.endsWith("_admin") || roleName.includes("admin");
+    const canManage = isSuperadmin || isAdmin;
+
+    if (!canManage) throw new AppError(403, "Action forbidden for user role");
 
     const updatePayload = { ...req.body };
     if (req.file) {
@@ -397,12 +459,35 @@ export const deleteMediaCornerImage = async (req, res, next) => {
   const requestId = req.requestId || "N/A";
 
   try {
+    const roleName = (req.user?.role_id?.name || "").toLowerCase();
+    const isSuperadmin = roleName === "superadmin";
+    const isAdmin = roleName.endsWith("_admin") || roleName.includes("admin");
+    const canManage = isSuperadmin || isAdmin;
+
+    if (!canManage) throw new AppError(403, "Action forbidden for user role");
+
     const profile = await MediaCorner.findByIdAndDelete(id);
     if (!profile) throw new AppError(404, "Media Corner not found");
 
     if (profile.media_file) await deleteFile(profile.media_file, requestId);
 
     return sendResponse(res, 200, true, "Media Corner deleted successfully", null, null, req);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Mark notification as read
+export const readNotification = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updatedNotification = await MediaCorner.findByIdAndUpdate(
+      id,
+      { is_read: true },
+      { new: true }
+    );
+    if (!updatedNotification) throw new AppError(404, "Notification not found");
+    return sendResponse(res, 200, true, "Notification marked as read", updatedNotification, null, req);
   } catch (err) {
     next(err);
   }

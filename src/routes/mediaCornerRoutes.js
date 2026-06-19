@@ -95,12 +95,17 @@ import {
   updateMediaCorner,
   deleteMediaCornerImage,
   readNotification,
+  getMediaTypes,
 } from "../controllers/mediaCornerController.js";
 import { createUploader } from "../config/multerv2.js";
 
 const router = express.Router();
 
-// Apply protect middleware to all routes in this router
+// Public route — returns the list of KB types + metadata (no auth required)
+// Must be registered BEFORE router.use(protect)
+router.get("/types", getMediaTypes);
+
+// Apply protect middleware to all routes below this point
 router.use(protect);
 
 // Use factory uploader for media_corner folder

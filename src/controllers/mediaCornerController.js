@@ -248,8 +248,15 @@ import path from "path";
 import { logger } from "../utils/logger.js";
 import { MediaCorner } from "../models/mediaCornerModel.js";
 import { User } from "../models/userModel.js";
+import { MEDIA_CORNER_TYPES } from "../config/mediaCornerTypes.js";
 import { AppError } from "../utils/AppError.js";
 import { sendResponse } from "../utils/sendResponse.js";
+
+// Get all available Knowledge Base media types (public — no auth needed)
+export const getMediaTypes = (req, res) => {
+  // We expose only KB types (exclude internal "notification" type)
+  return sendResponse(res, 200, true, "Media types retrieved successfully", MEDIA_CORNER_TYPES, null, req);
+};
 
 // Helper: delete file safely
 const deleteFile = async (relativePath, requestId = "N/A") => {

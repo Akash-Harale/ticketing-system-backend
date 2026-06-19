@@ -327,7 +327,6 @@ export const getMediaCorner = async (req, res, next) => {
     }
 
     const hostUrl = `${process.env.HOST_URL}:${process.env.PORT}`;
-    console.log(hostUrl,'--------------hostUrl')
     const updatedRecords = records.map((record) => {
       const obj = record.toObject();
       obj.media_file_url = obj.media_file ? `${hostUrl}/media/${obj.media_file}` : null;

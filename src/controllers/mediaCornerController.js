@@ -247,6 +247,7 @@ import fs from "fs";
 import path from "path";
 import { logger } from "../utils/logger.js";
 import { MediaCorner } from "../models/mediaCornerModel.js";
+import { User } from "../models/userModel.js";
 import { AppError } from "../utils/AppError.js";
 import { sendResponse } from "../utils/sendResponse.js";
 
@@ -274,6 +275,32 @@ export const createMediaCorner = async (req, res, next) => {
 
     const mediacorner = await MediaCorner.create(req.body);
     logger.info(`[${requestId}] Media Corner created: ${mediacorner._id}`);
+
+    // If this is a Knowledge Base post (not a notification), send a broadcast notification to all users
+    const isKnowledgeBasePost = req.body.media_type && req.body.media_type !== "notification";
+    if (isKnowledgeBasePost) {
+      try {
+        const typeLabel = req.body.media_type.charAt(0).toUpperCase() + req.body.media_type.slice(1);
+        const allUsers = await User.find({}, "_id member_id");
+
+        const broadcastNotifications = allUsers.map(u => ({
+          media_header: `New ${typeLabel} added to Knowledge Base`,
+          media_narration: `A new ${typeLabel.toLowerCase()} titled "${mediacorner.media_header}" has been added to the Knowledge Base. Check it out now.`,
+          media_type: "notification",
+          notification_type: "one-to-one",
+          recipient_id: u.member_id || u._id,
+          is_read: false
+        }));
+
+        if (broadcastNotifications.length > 0) {
+          await MediaCorner.insertMany(broadcastNotifications);
+          logger.info(`[${requestId}] Knowledge Base broadcast sent to ${broadcastNotifications.length} users`);
+        }
+      } catch (notifyErr) {
+        logger.warn(`[${requestId}] Failed to send Knowledge Base broadcast notification: ${notifyErr.message}`);
+      }
+    }
+
     return sendResponse(res, 201, true, "Media Corner created successfully", mediacorner, null, req);
   } catch (err) {
     if (req.body.media_file) await deleteFile(req.body.media_file, requestId);

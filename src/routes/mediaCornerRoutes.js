@@ -80,6 +80,7 @@ DELETE /:id   : idSchema (params)
 
 import express from "express";
 import validateRequest from "../middleware/validateRequest.js";
+import { protect } from "../middleware/auth.middleware.js";
 import {
   mediaCornerSchema,
   idSchema,
@@ -93,10 +94,14 @@ import {
   getMediaCornerImage,
   updateMediaCorner,
   deleteMediaCornerImage,
+  readNotification,
 } from "../controllers/mediaCornerController.js";
 import { createUploader } from "../config/multerv2.js";
 
 const router = express.Router();
+
+// Apply protect middleware to all routes in this router
+router.use(protect);
 
 // Use factory uploader for media_corner folder
 const upload = createUploader("media_corner");
@@ -138,6 +143,9 @@ router.get("/:id", validateRequest({ params: idSchema }), getMediaCornerById);
 
 // Delete Media Corner
 router.delete("/:id", validateRequest({ params: idSchema }), deleteMediaCornerImage);
+
+// Mark notification as read
+router.patch("/:id/read", validateRequest({ params: idSchema }), readNotification);
 
 //export default router;
 export const mediaCornerRoutes = router;

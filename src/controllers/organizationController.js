@@ -101,7 +101,17 @@ export const createOrganization = async (req, res, next) => {
 // ── Get All Organizations ────────────────────────────────────────────────────
 export const getOrganizations = async (req, res, next) => {
   try {
-    const orgs = await Organization.find()
+    const { orgn_type, orgn_state, orgn_district, search } = req.query;
+    let query = {};
+    
+    if (orgn_type) query.orgn_type = orgn_type;
+    if (orgn_state) query.orgn_state = orgn_state;
+    if (orgn_district) query.orgn_district = orgn_district;
+    if (search) {
+      query.orgn_name = { $regex: search, $options: 'i' };
+    }
+
+    const orgs = await Organization.find(query)
       .populate("orgn_district")
       .populate("orgn_state");
     return sendResponse(

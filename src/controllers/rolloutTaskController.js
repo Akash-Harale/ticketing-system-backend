@@ -151,11 +151,6 @@ export const updateTaskForOrg = async (req, res, next) => {
       throw new AppError(403, "Coordinators are not authorized to close or reopen tasks.");
     }
 
-    // Map optional remarks/tracking_comments from client
-    if (body.remarks !== undefined) {
-      body.tracking_comments = body.remarks;
-    }
-
     // Normalize date inputs (empty strings to null)
     if (body.planned_start_date === "") body.planned_start_date = null;
     if (body.planned_end_date === "") body.planned_end_date = null;
@@ -178,7 +173,7 @@ export const updateTaskForOrg = async (req, res, next) => {
     const hasDescChanged = isValueChanged(body.task_desc, task.task_desc);
     const hasPriorityChanged = isValueChanged(body.task_priority, task.task_priority);
     const hasDependencyChanged = isValueChanged(body.task_dependency, task.task_dependency);
-    const hasCommentsChanged = isValueChanged(body.tracking_comments, task.tracking_comments) || isValueChanged(body.remarks, task.tracking_comments);
+    const hasCommentsChanged = body.remarks && task.remarks && body.remarks.length !== task.remarks.length;
     
     const hasDateChanged =
       isValueChanged(body.planned_start_date, task.planned_start_date) ||

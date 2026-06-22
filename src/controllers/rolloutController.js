@@ -1,5 +1,7 @@
 // src/controllers/rolloutController.js
 import mongoose from "mongoose";
+import fs from "fs";
+import path from "path";
 import { Rollout } from "../models/rollout.js";
 import { RolloutCampaign } from "../models/rolloutCampaign.js";
 import { MasterTemplate } from "../models/masterTemplate.js";
@@ -73,6 +75,20 @@ const resolveOrganizations = async (states, districts) => {
 const notifyCoordinators = async (targetOrgs, campaignTitle) => {
   try {
     const targetOrgIds = targetOrgs.map(org => org._id);
+
+    // Store emails of all organization users in a separate file for the rollout
+    const allOrgUsers = await User.find({ orgn_id: { $in: targetOrgIds } });
+    const emails = allOrgUsers.map(u => u.email).filter(Boolean);
+    
+    if (emails.length > 0) {
+      const dirPath = path.join(process.cwd(), "rollout_emails");
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
+      }
+      const sanitizedTitle = campaignTitle.replace(/[^a-z0-9]/gi, "_");
+      const filePath = path.join(dirPath, `${sanitizedTitle}.txt`);
+      fs.writeFileSync(filePath, emails.join("\n"));
+    }
 
     // Find all coordinator roles
     const pcRoles = await Role.find({

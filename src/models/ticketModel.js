@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const ticketSchema = new mongoose.Schema(
   {
+    ticketNumber: {
+      type: Number,
+      unique: true,
+    },
     subject: {
       type: String,
       required: [true, "Ticket subject is required"],
@@ -19,6 +23,19 @@ const ticketSchema = new mongoose.Schema(
       type: String,
       enum: ["open", "in progress", "resolved", "closed"],
       default: "open",
+    },
+    statusDescription: {
+      type: String,
+      default: "",
+    },
+    resolvedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    statusUpdatedAt: {
+      type: Date,
+      default: null,
     },
     attachment: {
       type: String,

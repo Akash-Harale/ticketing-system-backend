@@ -44,7 +44,7 @@ export const authService = {
             throw new AppError('Email and password are required.', 400);
         }
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select('+password');
 
         if (!user || !(await user.comparePassword(password))) {
             // Use 401 — credentials don't match (don't hint which field is wrong)

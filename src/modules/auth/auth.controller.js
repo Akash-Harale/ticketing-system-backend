@@ -58,6 +58,8 @@ const createSendToken = async (user, statusCode, res) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log("email", email);
+    console.log("password", password);
 
     if (!email || !password) {
       return res.status(400).json({
@@ -91,6 +93,7 @@ export const login = async (req, res, next) => {
       .populate('orgn_id');
 
     if (!user || !(await user.comparePassword(password))) {
+      console.log("Incorrect email or password.",user);
       return res.status(401).json({
         status: 'fail',
         message: 'Incorrect email or password.'

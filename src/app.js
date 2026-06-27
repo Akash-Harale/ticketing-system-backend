@@ -27,6 +27,7 @@ import "./models/Resource.js";
 import { stateDistrictRoutes } from "./routes/stateDistrictRoutes.js";
 import { roleRoutes } from "./routes/roleRoutes.js";
 import rbacRoutes from "./modules/rbac/rbac.routes.js";
+import { ticketRoutes } from "./routes/ticketRoutes.js";
 
 const app = express();
 
@@ -74,6 +75,7 @@ app.use("/api/rollouttasks", rolloutTaskRoutes);
 app.use("/api/location", stateDistrictRoutes);
 app.use("/api/roles", roleRoutes);
 app.use("/api/rbac", rbacRoutes);
+app.use("/api/tickets", ticketRoutes);
 
 // Health Check
 app.get("/ping", (req, res) => {

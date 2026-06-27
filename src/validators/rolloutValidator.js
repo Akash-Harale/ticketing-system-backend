@@ -12,7 +12,12 @@ const taskSchema = Joi.object({
   actual_start_date: Joi.date().allow(null, "").optional(),
   actual_end_date: Joi.date().allow(null, "").optional(),
   task_status: Joi.string().valid("Open", "Pending", "In-progress", "Complete", "Closed", "Reopened").default("Open"),
-  tracking_comments: Joi.string().allow("")
+  remarks: Joi.array().items(
+    Joi.object({
+      date: Joi.date().optional(),
+      remark: Joi.string().allow("")
+    })
+  ).optional()
 });
 
 export const rolloutSchema = Joi.object({

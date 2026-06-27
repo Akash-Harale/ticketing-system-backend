@@ -11,64 +11,16 @@
 //   accept            — file input accept attribute (MIME types / extensions); null = any
 //   description       — short hint shown in the UI to guide the user
 
-export const MEDIA_CORNER_TYPES = [
-  {
-    value: "faq",
-    label: "FAQ",
-    requires_attachment: false,
-    allows_url: false,
-    accept: null,
-    description: "A question & answer entry for the Knowledge Base",
-  },
-  {
-    value: "document",
-    label: "Document",
-    requires_attachment: false,
-    allows_url: true,
-    accept: ".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    description: "A Word document or written guide",
-  },
-  {
-    value: "pdf",
-    label: "PDF",
-    requires_attachment: false,
-    allows_url: true,
-    accept: "application/pdf,.pdf",
-    description: "A PDF report, circular, or reference document",
-  },
-  {
-    value: "template",
-    label: "Template",
-    requires_attachment: false,
-    allows_url: true,
-    accept: ".doc,.docx,.xls,.xlsx,.ppt,.pptx,application/pdf",
-    description: "A reusable form or report template",
-  },
-  {
-    value: "image",
-    label: "Image",
-    requires_attachment: false,
-    allows_url: false,
-    accept: "image/*",
-    description: "A photo or graphic (JPG, PNG, etc.)",
-  },
-  {
-    value: "video",
-    label: "Video",
-    requires_attachment: false,
-    allows_url: true,
-    accept: "video/*,.mp4,.mov",
-    description: "A training or reference video",
-  },
-  {
-    value: "audio",
-    label: "Audio",
-    requires_attachment: false,
-    allows_url: false,
-    accept: "audio/*,.mp3,.wav",
-    description: "An audio recording or podcast",
-  },
-];
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export const MEDIA_CORNER_TYPES = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'mediaCornerTypes.json'), 'utf-8')
+);
 
 // Derive the plain string array for use in model enums and Joi validators
 export const MEDIA_CORNER_TYPE_VALUES = MEDIA_CORNER_TYPES.map((t) => t.value);

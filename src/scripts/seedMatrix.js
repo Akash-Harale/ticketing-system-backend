@@ -52,7 +52,15 @@ import { Role } from "../models/Role.js";
       getPrivId("mediacorner", "READ"),
       getPrivId("mediacorner", "CREATE"),
       getPrivId("mediacorner", "UPDATE"),
-      getPrivId("mediacorner", "DELETE")
+      getPrivId("mediacorner", "DELETE"),
+      // RBAC
+      getPrivId("rbac", "READ"),
+      getPrivId("rbac", "UPDATE"),
+      // Ticket
+      getPrivId("ticket", "READ"),
+      getPrivId("ticket", "CREATE"),
+      getPrivId("ticket", "UPDATE"),
+      getPrivId("ticket", "DELETE")
     ].filter(Boolean);
 
     // 3. NSS_User (Read-only access, no create/update/delete/RBAC)
@@ -78,7 +86,13 @@ import { Role } from "../models/Role.js";
       getPrivId("mediacorner", "READ"),
       getPrivId("mediacorner", "CREATE"),
       getPrivId("mediacorner", "UPDATE"),
-      getPrivId("mediacorner", "DELETE")
+      getPrivId("mediacorner", "DELETE"),
+      getPrivId("rbac", "READ"),
+      getPrivId("rbac", "UPDATE"),
+      getPrivId("ticket", "READ"),
+      getPrivId("ticket", "CREATE"),
+      getPrivId("ticket", "UPDATE"),
+      getPrivId("ticket", "DELETE")
     ].filter(Boolean);
 
     // 5. PMU_User (Read-only access)

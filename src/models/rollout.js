@@ -15,7 +15,7 @@
       "actual_start_date": null,
       "actual_end_date": null,
       "task_status": "Open",
-      "tracking_comments": ""
+      "remarks": []
     }
   ],
   "createdAt": "2026-06-02T12:00:00.000Z",
@@ -40,7 +40,10 @@ const taskSchema = new mongoose.Schema({
     enum: ["Open", "Pending", "In-progress", "Complete", "Closed", "Reopened"],
     default: "Open"
   },
-  tracking_comments: { type: String, default: "" }
+  remarks: [{
+    date: { type: Date, default: Date.now },
+    remark: { type: String }
+  }]
 }, { _id: false });
 
 const rolloutSchema = new mongoose.Schema({

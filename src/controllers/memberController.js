@@ -27,6 +27,7 @@ export const createMember = async (req, res, next) => {
     const user = await User.create(
       [{
         email,
+        password: "nutan123",
         role_id,
         orgn_id: organization,
         member_id: member[0]._id

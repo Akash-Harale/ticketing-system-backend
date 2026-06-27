@@ -15,26 +15,34 @@
     "lint": "eslint .",
     "test": "jest"
   },
-  "keywords": ["nss", "mis", "backend", "express", "mongoose"],
+  "keywords": [
+    "nss",
+    "mis",
+    "backend",
+    "express",
+    "mongoose"
+  ],
   "author": "Your Name <you@example.com>",
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "axios": "^1.18.1",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "form-data": "^4.0.6",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.6.3",
     "multer": "^2.0.2",
     "uuid": "^11.1.0",
-    "winston": "^3.17.0",
-    "joi": "^17.13.3"
+    "winston": "^3.17.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14",
     "eslint": "^9.0.0",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.14"
   }
 }

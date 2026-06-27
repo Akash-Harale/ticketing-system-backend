@@ -2,6 +2,8 @@
 import mongoose from "mongoose";
 import fs from "fs";
 import path from "path";
+import axios from "axios";
+import FormData from "form-data";
 import { Rollout } from "../models/rollout.js";
 import { RolloutCampaign } from "../models/rolloutCampaign.js";
 import { MasterTemplate } from "../models/masterTemplate.js";
@@ -88,6 +90,31 @@ const notifyCoordinators = async (targetOrgs, campaignTitle) => {
       const sanitizedTitle = campaignTitle.replace(/[^a-z0-9]/gi, "_");
       const filePath = path.join(dirPath, `${sanitizedTitle}.txt`);
       fs.writeFileSync(filePath, emails.join("\n"));
+
+      // Call Bulk Email Service API using app_key
+      const bulkServiceUrl = process.env.BULK_EMAIL_SERVICE_URL || "http://localhost:3100/api";
+      const appKey = process.env.BULK_EMAIL_APP_KEY;
+      if (appKey) {
+        try {
+          const form = new FormData();
+          form.append("job_name", `Rollout: ${campaignTitle}`);
+          form.append("subject", `New Rollout Campaign Assigned: ${campaignTitle}`);
+          form.append("mail_body_html", `<p>Hello,</p><p>A new rollout campaign <b>"${campaignTitle}"</b> has been assigned to your Program Unit. Please log into the dashboard to review and complete your tasks.</p>`);
+          form.append("email_list", fs.createReadStream(filePath));
+
+          const response = await axios.post(`${bulkServiceUrl}/mail/jobs`, form, {
+            headers: {
+              ...form.getHeaders(),
+              "app_key": appKey
+            }
+          });
+          console.log(`✅ Bulk Email job created for rollout "${campaignTitle}":`, response.data.message);
+        } catch (mailErr) {
+          console.error("⚠️ Bulk Email API error:", mailErr.response?.data || mailErr.message);
+        }
+      } else {
+        console.log("ℹ️ BULK_EMAIL_APP_KEY not set in .env. Skipping bulk email dispatch.");
+      }
     }
 
     // Find all coordinator roles

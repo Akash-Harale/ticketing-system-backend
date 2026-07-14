@@ -12,6 +12,8 @@ import {
   updateRollout,
   deleteRollout,
   updateRolloutCampaign,
+  sendIncompleteReminderEmail,
+  sendSingleUnitReminder,
 } from "../controllers/rolloutController.js";
 
 import { protect } from "../middleware/auth.middleware.js";
@@ -38,6 +40,12 @@ router.put("/:id", validateRequest({ params: idSchema }), updateRollout);
 
 // Update rollout campaign by ID
 router.put("/campaign/:campaignId", validateRequest({ body: updateCampaignSchema }), updateRolloutCampaign);
+
+// Send reminder email to incomplete program units in campaign
+router.post("/campaign/:campaignId/remind-incomplete", sendIncompleteReminderEmail);
+
+// Send reminder email to a single unit coordinator
+router.post("/org/:orgId/remind", sendSingleUnitReminder);
 
 // Delete rollout by ID
 router.delete("/:id", validateRequest({ params: idSchema }), deleteRollout);

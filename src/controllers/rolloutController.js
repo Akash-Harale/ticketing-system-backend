@@ -637,3 +637,144 @@ export const updateRolloutCampaign = async (req, res, next) => {
     next(err);
   }
 };
+
+// Send reminder email to units/coordinators who have not completed all tasks in a rollout campaign
+export const sendIncompleteReminderEmail = async (req, res, next) => {
+  try {
+    const { campaignId } = req.params;
+    const { subject, body } = req.body;
+
+    const campaign = await RolloutCampaign.findById(campaignId);
+    if (!campaign) {
+      throw new AppError(404, "Rollout campaign not found");
+    }
+
+    // Find all rollouts under this campaign
+    const rollouts = await Rollout.find({ campaign_id: campaignId }).populate("orgn_id");
+    
+    // Filter to rollouts that are not completed (i.e. at least one task is not Complete or Closed)
+    const incompleteRollouts = rollouts.filter(r => {
+      return r.tasks.some(t => t.task_status !== "Complete" && t.task_status !== "Closed");
+    });
+
+    if (incompleteRollouts.length === 0) {
+      return sendResponse(res, 200, true, "All units have already completed the tasks in this rollout.", null, null, req);
+    }
+
+    // Get all user emails for these incomplete organizations
+    const incompleteOrgIds = incompleteRollouts.map(r => r.orgn_id?._id).filter(Boolean);
+    const users = await User.find({ orgn_id: { $in: incompleteOrgIds } });
+    const emails = users.map(u => u.email).filter(Boolean);
+
+    if (emails.length === 0) {
+      return sendResponse(res, 200, true, "No coordinator emails found for incomplete units.", null, null, req);
+    }
+
+    // Write emails to a file for the bulk service
+    const dirPath = path.join(process.cwd(), "rollout_emails");
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+    const tempFileName = `reminder_${campaignId}_${Date.now()}.txt`;
+    const filePath = path.join(dirPath, tempFileName);
+    fs.writeFileSync(filePath, emails.join("\n"));
+
+    // Call Bulk Email Service API
+    const bulkServiceUrl = process.env.BULK_EMAIL_SERVICE_URL || "http://localhost:3100/api";
+    const appKey = process.env.BULK_EMAIL_APP_KEY;
+
+    if (appKey) {
+      const form = new FormData();
+      form.append("job_name", `Reminder: Campaign ${campaign.title}`);
+      form.append("subject", subject || `Reminder: Pending Tasks in Rollout ${campaign.title}`);
+      form.append("mail_body_html", body || `<p>Hello,</p><p>This is a reminder that you still have pending tasks in the rollout campaign <b>"${campaign.title}"</b>. Please log in and complete them.</p>`);
+      form.append("email_list", fs.createReadStream(filePath));
+
+      const response = await axios.post(`${bulkServiceUrl}/mail/jobs`, form, {
+        headers: {
+          ...form.getHeaders(),
+          "app_key": appKey
+        }
+      });
+      console.log(`✅ Bulk Email reminder job created for rollout "${campaign.title}":`, response.data.message);
+      
+      // Clean up file asynchronously
+      setTimeout(() => {
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+      }, 5000);
+
+      return sendResponse(res, 200, true, `Reminder email sent successfully to ${emails.length} recipients.`, response.data, null, req);
+    } else {
+      // Clean up file
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+      return sendResponse(res, 200, true, "BULK_EMAIL_APP_KEY is not set. Email was not dispatched, but recipients list was resolved.", { emails }, null, req);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Send reminder email to a single organization coordinator
+export const sendSingleUnitReminder = async (req, res, next) => {
+  try {
+    const { orgId } = req.params;
+    const { subject, body } = req.body;
+
+    const user = await User.findOne({ orgn_id: orgId });
+    if (!user || !user.email) {
+      throw new AppError(404, "No coordinator user found with an email address for this unit.");
+    }
+
+    const email = user.email;
+
+    // Write email to a file for the bulk service
+    const dirPath = path.join(process.cwd(), "rollout_emails");
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+    const tempFileName = `single_reminder_${orgId}_${Date.now()}.txt`;
+    const filePath = path.join(dirPath, tempFileName);
+    fs.writeFileSync(filePath, email);
+
+    // Call Bulk Email Service API
+    const bulkServiceUrl = process.env.BULK_EMAIL_SERVICE_URL || "http://localhost:3100/api";
+    const appKey = process.env.BULK_EMAIL_APP_KEY;
+
+    if (appKey) {
+      const form = new FormData();
+      form.append("job_name", `Single Unit Reminder: ${user.name || orgId}`);
+      form.append("subject", subject || "Reminder: Pending Rollout Tasks");
+      form.append("mail_body_html", body || `<p>Hello,</p><p>This is a reminder that you still have pending tasks in your assigned rollout. Please log in and complete them.</p>`);
+      form.append("email_list", fs.createReadStream(filePath));
+
+      const response = await axios.post(`${bulkServiceUrl}/mail/jobs`, form, {
+        headers: {
+          ...form.getHeaders(),
+          "app_key": appKey
+        }
+      });
+      console.log(`✅ Bulk Email single reminder job created for coordinator "${email}":`, response.data.message);
+      
+      // Clean up file asynchronously
+      setTimeout(() => {
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+      }, 5000);
+
+      return sendResponse(res, 200, true, `Reminder email sent successfully to ${email}.`, response.data, null, req);
+    } else {
+      // Clean up file
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+      return sendResponse(res, 200, true, "BULK_EMAIL_APP_KEY is not set. Email was not dispatched, but coordinator email was resolved.", { email }, null, req);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
